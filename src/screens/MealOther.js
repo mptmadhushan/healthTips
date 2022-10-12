@@ -133,7 +133,7 @@ const DetailScreen = ({navigation}) => {
                   userNameError ? styles.inputStyleError : '',
                 ]}
                 onChangeText={UserEmail => setUserEmail(UserEmail)}
-                placeholder="Enter your meal 2 (kg/ml)"
+                placeholder="Enter your meal 2 (g)"
                 placeholderTextColor={COLORS.white}
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -155,7 +155,7 @@ const DetailScreen = ({navigation}) => {
                   userNameError ? styles.inputStyleError : '',
                 ]}
                 onChangeText={UserName => setUserName(UserName)}
-                placeholder="Enter your meal 3 (kg/ml)"
+                placeholder="Enter your meal 3 (g)"
                 placeholderTextColor={COLORS.white}
                 autoCapitalize="none"
                 keyboardType="email-address"
