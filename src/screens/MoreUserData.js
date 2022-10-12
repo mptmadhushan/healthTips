@@ -42,6 +42,12 @@ const RegisterScreen = ({navigation}) => {
   const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
   const yesno = ['yes', 'no'];
   const yesnom = ['yes', 'no', 'I’m not Aware'];
+  const yesnsex = ['Male', 'Female'];
+  const yesnoage = [
+    'Infant / Toodlers (0-5 yrs)',
+    'Infant / Toodlers (0-5 yrs)',
+    'Infant / Toodlers (0-5 yrs)',
+  ];
 
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
@@ -170,6 +176,31 @@ const RegisterScreen = ({navigation}) => {
             </View>
           </View>
           <View style={styles.rowFlex}>
+            <Text style={styles.buttonTextStyle}>Your sex?</Text>
+          </View>
+          <View style={styles.rowFlex}>
+            <View style={styles.SectionStyle}>
+              <SelectDropdown
+                dropdownStyle={{minWidth: SIZES.width * 0.7}}
+                data={countries}
+                onSelect={(selectedItem, index) => {
+                  console.log(selectedItem, index);
+                }}
+                buttonStyle={{minWidth: SIZES.width * 0.7}}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  // text represented after item is selected
+                  // if data array is an array of objects then return selectedItem.property to render after item is selected
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  // text represented for each item in dropdown
+                  // if data array is an array of objects then return item.property to represent item in dropdown
+                  return item;
+                }}
+              />
+            </View>
+          </View>
+          <View style={styles.rowFlex}>
             <Text style={styles.buttonTextStyle}>
               Family History on food allergies?
             </Text>
@@ -223,7 +254,6 @@ const RegisterScreen = ({navigation}) => {
               />
             </View>
           </View>
-
           <View style={styles.centerFlex}>
             <TouchableOpacity
               style={styles.buttonStyle}

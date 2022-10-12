@@ -53,6 +53,7 @@ export default function OnBoard({navigation}) {
             </Text>
           </View>
         </TouchableOpacity>
+
         <View style={styles.centerFlex}>
           <Image
             source={sec2}
@@ -63,24 +64,26 @@ export default function OnBoard({navigation}) {
               height: SIZES.height * 0.2,
             }}
           />
-          <Text style={styles.title}>
-            Start tracking food items and symptoms
-          </Text>
+          <Text style={styles.title}>View previously saved drafts</Text>
         </View>
-        <View style={styles.centerFlex}>
-          <Image
-            source={sec3}
-            resizeMode="cover"
-            style={{
-              width: '100%',
-              marginTop: -4,
-              height: SIZES.height * 0.2,
-            }}
-          />
-          <Text style={styles.title}>
-            Start tracking food items and symptoms
-          </Text>
-        </View>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate('MoreUserData')}>
+          <View style={styles.centerFlex}>
+            <Image
+              source={sec3}
+              resizeMode="cover"
+              style={{
+                width: '100%',
+                marginTop: -4,
+                height: SIZES.height * 0.2,
+              }}
+            />
+            <Text style={styles.title}>
+              Ingredient tracking and allergy free recipes
+            </Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.centerFlex}>
           <Image
             source={sec4}
@@ -134,7 +137,8 @@ const styles = StyleSheet.create({
   centerFlex: {
     backgroundColor: COLORS.primary,
     width: SIZES.width * 0.8,
-    marginTop: 10,
+    marginTop: 15,
+    marginBottom: 15,
     borderRadius: 20,
   },
   title: {
@@ -146,9 +150,10 @@ const styles = StyleSheet.create({
   },
   title2: {
     marginTop: SIZES.height * 0.05,
+    marginBottom: SIZES.height * 0.05,
     color: COLORS.black,
     fontWeight: 'bold',
-    fontSize: 28,
+    fontSize: 25,
     textAlign: 'center',
   },
 });
