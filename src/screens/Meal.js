@@ -64,7 +64,14 @@ const DetailScreen = ({navigation}) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Text style={styles.title}>Meal Plan</Text>
+
           <View style={styles.rowFlex}>
+            <TouchableOpacity
+              style={styles.buttonStyle22}
+              activeOpacity={0.5}
+              onPress={() => onPressReg()}>
+              <Text style={styles.buttonTextStyle}>Breakfast</Text>
+            </TouchableOpacity>
             {/* <View style={styles.SectionStyle}>
               <TouchableOpacity
                 style={styles.buttonStyle}
@@ -212,12 +219,6 @@ const DetailScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
-              onPress={() => onPressReg()}>
-              <Text style={styles.buttonTextStyle}>Breakfast</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
               onPress={() => navigation.navigate('MealLunch')}>
               <Text style={styles.buttonTextStyle}>Next</Text>
             </TouchableOpacity>
@@ -281,6 +282,18 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     color: COLORS.white,
     height: 40,
+    width: 280,
+    alignItems: 'center',
+    borderRadius: 10,
+    marginBottom: 20,
+    justifyContent: 'center',
+  },
+  buttonStyle22: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+    borderWidth: 0,
+    color: COLORS.white,
+    height: 30,
     width: 280,
     alignItems: 'center',
     borderRadius: 10,

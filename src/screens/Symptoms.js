@@ -104,7 +104,9 @@ const RegisterScreen = ({navigation}) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <View style={styles.centerFlex}>
-            <Text style={styles.buttonTextStyle}>Let’s Track your Symptoms</Text>
+            <Text style={styles.buttonTextStyle}>
+              Let’s Track your Symptoms
+            </Text>
           </View>
           <View>
             <View style={styles.centerFlex}>
@@ -139,9 +141,8 @@ const RegisterScreen = ({navigation}) => {
               textColor: '#fff',
               color: '#fff',
             }}
-            checkboxProp={{boxType: 'square'}} // iOS (supported from v0.3.0)
+            checkboxProp={{boxType: 'square'}}
           />
-
           <View style={styles.centerFlex}>
             <TouchableOpacity
               style={styles.buttonStyle}
@@ -171,6 +172,15 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     marginLeft: SIZES.width * 0.3,
+  },
+  buttonTextStyle: {
+    color: COLORS.secondary,
+    fontSize: 25,
+    marginTop: 20,
+    marginLeft: 5,
+    padding: 5,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   rowFlex: {
     flexDirection: 'row',
@@ -206,12 +216,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
   },
-  buttonTextStyle: {
-    color: COLORS.primary,
-    fontSize: 15,
-    marginTop: 20,
-    marginLeft: 5,
-  },
+
   buttonTextStye: {
     color: '#FFFFFF',
     fontSize: 15,

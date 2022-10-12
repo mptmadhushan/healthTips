@@ -37,16 +37,23 @@ export default function OnBoard({navigation}) {
           <Text style={styles.btnText}>Histamine Allergy</Text>
         </TouchableOpacity>
         <Text style={styles.title}>
-          Try eliminating the above food type/ item from your meal plan for 2
+          Try eliminating the above food type item from your meal plan for 2
           days while seeking medical help as soon as possible
         </Text>
         <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('OnBoard');
+          }}
+          style={styles.btn}>
+          <Text style={styles.btnText}>Home</Text>
+        </TouchableOpacity>
+        {/* <TouchableOpacity
           onPress={() => {
             navigation.navigate('HealthTips');
           }}
           style={styles.btn}>
           Continue to track food items
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </LinearGradient>
     </ImageBackground>
   );
@@ -57,9 +64,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   overlay: {
-    marginTop: SIZES.height * 0.2,
+    marginTop: SIZES.height * 0.05,
     // backgroundColor: 'rgba(255,0,0,0.5)',
-    height: SIZES.height * 0.8,
+    height: SIZES.height * 0.9,
     alignItems: 'center',
   },
   btn: {

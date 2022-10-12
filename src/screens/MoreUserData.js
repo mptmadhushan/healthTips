@@ -157,7 +157,7 @@ const RegisterScreen = ({navigation}) => {
             <View style={styles.SectionStyle}>
               <SelectDropdown
                 dropdownStyle={{minWidth: SIZES.width * 0.7}}
-                data={countries}
+                data={yesnoage}
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
@@ -182,7 +182,7 @@ const RegisterScreen = ({navigation}) => {
             <View style={styles.SectionStyle}>
               <SelectDropdown
                 dropdownStyle={{minWidth: SIZES.width * 0.7}}
-                data={countries}
+                data={yesnsex}
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
@@ -279,9 +279,9 @@ const styles = StyleSheet.create({
   },
   buttonTextStyle2: {
     color: COLORS.white,
-    fontSize: 10,
+    fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'right',
+    textAlign: 'center',
     paddingTop: 10,
     paddingBottom: 10,
     marginLeft: SIZES.width * 0.3,

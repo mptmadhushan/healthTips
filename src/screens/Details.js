@@ -20,6 +20,8 @@ import {
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
+import CheckboxList from 'rn-checkbox-list';
+import SelectDropdown from 'react-native-select-dropdown';
 
 const DetailScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
@@ -32,7 +34,14 @@ const DetailScreen = ({navigation}) => {
   const [passwordError, setPasswordError] = useState(false);
 
   const passwordInputRef = createRef();
-
+  const data = [
+    'Teacher',
+    'Nurse',
+    'Police Officer',
+    'Construction work',
+    'Farming',
+    'Desk job',
+  ];
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
@@ -244,12 +253,34 @@ const DetailScreen = ({navigation}) => {
               />
             </View>
           </View>
+          <View style={styles.rowFlex}>
+            <View style={styles.SectionStyle}>
+              <SelectDropdown
+                dropdownStyle={{minWidth: SIZES.width * 0.7}}
+                data={data}
+                onSelect={(selectedItem, index) => {
+                  console.log(selectedItem, index);
+                }}
+                buttonStyle={{minWidth: SIZES.width * 0.7}}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  // text represented after item is selected
+                  // if data array is an array of objects then return selectedItem.property to render after item is selected
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  // text represented for each item in dropdown
+                  // if data array is an array of objects then return item.property to represent item in dropdown
+                  return item;
+                }}
+              />
+            </View>
+          </View>
           <View style={styles.centerFlex}>
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
               onPress={() => navigation.navigate('Meal')}>
-              <Text style={styles.buttonTextStyle}>Next</Text>
+              <Text style={styles.buttonTextStyle}>Nesxt</Text>
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>

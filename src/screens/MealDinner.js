@@ -65,6 +65,12 @@ const DetailScreen = ({navigation}) => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Text style={styles.title}>Meal Plan</Text>
           <View style={styles.rowFlex}>
+            <TouchableOpacity
+              style={styles.buttonStyle22}
+              activeOpacity={0.5}
+              onPress={() => onPressReg()}>
+              <Text style={styles.buttonTextStyle}>Dinner</Text>
+            </TouchableOpacity>
             {/* <View style={styles.SectionStyle}>
               <TouchableOpacity
                 style={styles.buttonStyle}
@@ -212,8 +218,10 @@ const DetailScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
-              onPress={() => onPressReg()}>
-              <Text style={styles.buttonTextStyle}>Dinner</Text>
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Text style={styles.buttonTextStyle}>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonStyle}
@@ -234,6 +242,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+  },
+
+  buttonStyle22: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+    borderWidth: 0,
+    color: COLORS.white,
+    height: 30,
+    width: 280,
+    alignItems: 'center',
+    borderRadius: 10,
+    marginBottom: 20,
+    justifyContent: 'center',
   },
   buttonTextStyle2: {
     color: COLORS.secondary,

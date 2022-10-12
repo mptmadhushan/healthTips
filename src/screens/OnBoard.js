@@ -53,7 +53,24 @@ export default function OnBoard({navigation}) {
             </Text>
           </View>
         </TouchableOpacity>
-
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate('MoreUserData')}>
+          <View style={styles.centerFlex}>
+            <Image
+              source={sec4}
+              resizeMode="cover"
+              style={{
+                width: '100%',
+                marginTop: -4,
+                height: SIZES.height * 0.2,
+              }}
+            />
+            <Text style={styles.title}>
+              Start tracking food items and symptoms
+            </Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.centerFlex}>
           <Image
             source={sec2}
@@ -66,27 +83,10 @@ export default function OnBoard({navigation}) {
           />
           <Text style={styles.title}>View previously saved drafts</Text>
         </View>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => navigation.navigate('MoreUserData')}>
-          <View style={styles.centerFlex}>
-            <Image
-              source={sec3}
-              resizeMode="cover"
-              style={{
-                width: '100%',
-                marginTop: -4,
-                height: SIZES.height * 0.2,
-              }}
-            />
-            <Text style={styles.title}>
-              Ingredient tracking and allergy free recipes
-            </Text>
-          </View>
-        </TouchableOpacity>
+
         <View style={styles.centerFlex}>
           <Image
-            source={sec4}
+            source={sec3}
             resizeMode="cover"
             style={{
               width: '100%',
@@ -95,7 +95,7 @@ export default function OnBoard({navigation}) {
             }}
           />
           <Text style={styles.title}>
-            Start tracking food items and symptoms
+            Ingredient tracking and allergy free recipes
           </Text>
         </View>
       </ScrollView>

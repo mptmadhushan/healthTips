@@ -48,12 +48,12 @@ const RegisterScreen = ({navigation}) => {
   const yesno = ['yes', 'no'];
   const yesnom = ['yes', 'no', 'I’m not Aware'];
   const data = [
-    {id: 1, name: 'Milk'},
-    {id: 2, name: 'Eggs'},
-    {id: 3, name: 'Wheat'},
-    {id: 4, name: 'Fish'},
-    {id: 5, name: 'Corn'},
-    {id: 6, name: 'Raw Vegetables'},
+    {id: 1, name: 'Teacher'},
+    {id: 2, name: 'Nurse'},
+    {id: 3, name: 'Police Officer'},
+    {id: 4, name: 'Construction work'},
+    {id: 5, name: 'Farming'},
+    {id: 6, name: 'Desk job'},
   ];
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
@@ -98,6 +98,7 @@ const RegisterScreen = ({navigation}) => {
           justifyContent: 'center',
           width: SIZES.width,
           alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.2)',
           alignContent: 'center',
         }}>
         <KeyboardAvoidingView
@@ -108,7 +109,7 @@ const RegisterScreen = ({navigation}) => {
             </Text>
           </View>
           <View>
-            <View style={styles.centerFlex}>
+            <View>
               <TouchableOpacity
                 style={styles.buttonStyle}
                 activeOpacity={0.5}
@@ -131,7 +132,7 @@ const RegisterScreen = ({navigation}) => {
             />
           </View>
           <CheckboxList
-            theme="red"
+            theme="green"
             listItems={data}
             onChange={({ids, items}) => console.log('My updated list :: ', ids)}
             listItemStyle={{
@@ -142,7 +143,58 @@ const RegisterScreen = ({navigation}) => {
             }}
             checkboxProp={{boxType: 'square'}} // iOS (supported from v0.3.0)
           />
-
+          <Text style={styles.buttonTextSty}>Apart from the above list </Text>
+          <TextInput
+            style={[
+              styles.inputStyle,
+              userNameError ? styles.inputStyleError : '',
+            ]}
+            onChangeText={UserName => setUserName(UserName)}
+            placeholder="Amount Taken"
+            placeholderTextColor={COLORS.white}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            returnKeyType="next"
+            onSubmitEditing={() =>
+              passwordInputRef.current && passwordInputRef.current.focus()
+            }
+            underlineColorAndroid="#f000"
+            blurOnSubmit={false}
+          />
+          <TextInput
+            style={[
+              styles.inputStyle,
+              userNameError ? styles.inputStyleError : '',
+            ]}
+            onChangeText={UserName => setUserName(UserName)}
+            placeholder="Food item 1"
+            placeholderTextColor={COLORS.white}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            returnKeyType="next"
+            onSubmitEditing={() =>
+              passwordInputRef.current && passwordInputRef.current.focus()
+            }
+            underlineColorAndroid="#f000"
+            blurOnSubmit={false}
+          />
+          <TextInput
+            style={[
+              styles.inputStyle,
+              userNameError ? styles.inputStyleError : '',
+            ]}
+            onChangeText={UserName => setUserName(UserName)}
+            placeholder="Food item 2"
+            placeholderTextColor={COLORS.white}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            returnKeyType="next"
+            onSubmitEditing={() =>
+              passwordInputRef.current && passwordInputRef.current.focus()
+            }
+            underlineColorAndroid="#f000"
+            blurOnSubmit={false}
+          />
           <View style={styles.centerFlex}>
             <TouchableOpacity
               style={styles.buttonStyle}
@@ -205,13 +257,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     justifyContent: 'center',
-    marginTop: 10,
   },
   buttonTextStyle: {
-    color: COLORS.primary,
-    fontSize: 15,
+    color: COLORS.secondary,
+    fontSize: 25,
     marginTop: 20,
     marginLeft: 5,
+    padding: 5,
+    fontWeight: 'bold',
+
+    textAlign: 'center',
   },
   buttonTextStye: {
     color: '#FFFFFF',
@@ -223,11 +278,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   inputStyle: {
-    flex: 1,
-    color: COLORS.third,
+    color: COLORS.primary,
     paddingLeft: 15,
     paddingRight: 15,
-    width: SIZES.width * 0.7,
+    width: SIZES.width * 0.95,
+    margin: 10,
+    borderWidth: 1,
+    borderColor: '#ffff',
+    borderRadius: 20,
   },
   inputStyleError: {
     flex: 1,
