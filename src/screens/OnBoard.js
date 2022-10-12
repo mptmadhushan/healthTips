@@ -1,11 +1,10 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
-  Image,
   StyleSheet,
   TouchableOpacity,
   Text,
+  Image,
   ImageBackground,
 } from 'react-native';
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
@@ -14,27 +13,29 @@ export default function OnBoard({navigation}) {
   return (
     <ImageBackground
       style={styles.container}
-      source={require('../assets/images/Bg.png')}>
-      <LinearGradient
-        colors={['transparent', COLORS.primary]}
-        style={styles.overlay}>
-        <Image
-          style={{
-            width: 100,
-            maxHeight: 100,
-            marginTop: SIZES.height * 0.2,
-            resizeMode: 'contain',
-          }}
-          source={images}
-        />
-        <Text style={styles.title2}>Take care of your</Text>
-        <Text style={styles.title}>"Health"</Text>
+      source={require('../assets/images/arBg.jpeg')}>
+      <LinearGradient colors={['transparent', 'white']} style={styles.overlay}>
+        <View style={styles.centerFlex}>
+          <Image
+            source={images.logo}
+            resizeMode="contain"
+            style={{
+              width: SIZES.width * 0.3,
+              height: SIZES.width * 0.3,
+            }}
+          />
+        </View>
+        <Text style={styles.title2}>
+          Let's predict your future health and consequences
+        </Text>
+        <Text style={styles.title}>Culpa consectetur tempor qui ex Lorem.</Text>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Home');
+            // navigation.navigate('Home');
+            navigation.navigate('LogIn');
           }}
           style={styles.btn}>
-          <Text style={styles.btnText}>Get started</Text>
+          <Text style={styles.btnText}>Let's Start</Text>
         </TouchableOpacity>
       </LinearGradient>
     </ImageBackground>
@@ -52,15 +53,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btn: {
-    backgroundColor: COLORS.third,
+    marginTop: SIZES.height * 0.06,
+    backgroundColor: COLORS.primary,
     height: 40,
     width: 100,
-    borderRadius: 20,
+    borderRadius: 10,
     margin: 10,
-    marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: COLORS.third,
+    shadowColor: COLORS.primary,
     shadowOffset: {
       width: 12,
       height: 12,
@@ -73,17 +74,17 @@ const styles = StyleSheet.create({
     color: COLORS.white,
   },
   title: {
-    color: COLORS.secondary,
-    fontSize: 20,
+    color: COLORS.black,
+    fontSize: 18,
+    marginTop: SIZES.height * 0.06,
     textAlign: 'center',
     paddingHorizontal: 20,
-    fontWeight: 'bold',
   },
   title2: {
-    marginTop: SIZES.height * 0.02,
-    color: COLORS.white,
+    marginTop: SIZES.height * 0.1,
+    color: COLORS.black,
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 28,
     textAlign: 'center',
   },
 });

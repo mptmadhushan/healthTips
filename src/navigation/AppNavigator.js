@@ -2,9 +2,20 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import OnBoard from '../screens/OnBoard';
-import Home from '../screens/Home';
-import Result from '../screens/Result';
-import Comphealth from '../screens/Comphealth';
+import LogIn from '../screens/LogIn';
+
+import Register from '../screens/Register';
+import Details from '../screens/Details';
+import BMI from '../screens/BMI';
+import UserDetails from '../screens/UserDetails';
+import Meal from '../screens/Meal';
+import MealResult from '../screens/MealResult';
+import HealthTips from '../screens/HealthTips';
+import MoreUserData from '../screens/MoreUserData';
+import SuspectFood from '../screens/SuspectFood';
+import AlleResult from '../screens/AlleResult';
+import Symptoms from '../screens/Symptoms';
+
 import {TapGestureHandler} from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
@@ -18,24 +29,69 @@ function MainStackNavigator() {
           headerShown: TapGestureHandler,
         }}>
         <Stack.Screen
-          name="Home"
-          options={{headerShown: false}}
-          component={Home}
-        />
-        <Stack.Screen
           name="OnBoard"
           options={{headerShown: false}}
           component={OnBoard}
         />
         <Stack.Screen
-          name="Comphealth"
+          name="LogIn"
           options={{headerShown: false}}
-          component={Comphealth}
+          component={LogIn}
         />
         <Stack.Screen
-          name="Result"
+          name="Details"
           options={{headerShown: false}}
-          component={Result}
+          component={Details}
+        />
+        <Stack.Screen
+          name="Register"
+          options={{headerShown: false}}
+          component={Register}
+        />
+        <Stack.Screen
+          name="BMI"
+          options={{headerShown: false}}
+          component={BMI}
+        />
+        <Stack.Screen
+          name="UserDetails"
+          options={{headerShown: false}}
+          component={UserDetails}
+        />
+        <Stack.Screen
+          name="Meal"
+          options={{headerShown: false}}
+          component={Meal}
+        />
+        <Stack.Screen
+          name="MealResult"
+          options={{headerShown: false}}
+          component={MealResult}
+        />
+        <Stack.Screen
+          name="MoreUserData"
+          options={{headerShown: false}}
+          component={MoreUserData}
+        />
+        <Stack.Screen
+          name="HealthTips"
+          options={{headerShown: false}}
+          component={HealthTips}
+        />
+        <Stack.Screen
+          name="SuspectFood"
+          options={{headerShown: false}}
+          component={SuspectFood}
+        />
+        <Stack.Screen
+          name="AlleResult"
+          options={{headerShown: false}}
+          component={AlleResult}
+        />
+        <Stack.Screen
+          name="Symptoms"
+          options={{headerShown: false}}
+          component={Symptoms}
         />
       </Stack.Navigator>
     </NavigationContainer>
