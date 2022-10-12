@@ -15,6 +15,9 @@ import MoreUserData from '../screens/MoreUserData';
 import SuspectFood from '../screens/SuspectFood';
 import AlleResult from '../screens/AlleResult';
 import Symptoms from '../screens/Symptoms';
+import MealDinner from '../screens/MealDinner';
+import MealLunch from '../screens/MealLunch';
+import MealOther from '../screens/MealOther';
 
 import {TapGestureHandler} from 'react-native-gesture-handler';
 
@@ -89,9 +92,24 @@ function MainStackNavigator() {
           component={AlleResult}
         />
         <Stack.Screen
+          name="MealDinner"
+          options={{headerShown: false}}
+          component={MealDinner}
+        />
+        <Stack.Screen
+          name="MealLunch"
+          options={{headerShown: false}}
+          component={MealLunch}
+        />
+        <Stack.Screen
           name="Symptoms"
           options={{headerShown: false}}
           component={Symptoms}
+        />
+        <Stack.Screen
+          name="MealOther"
+          options={{headerShown: false}}
+          component={MealOther}
         />
       </Stack.Navigator>
     </NavigationContainer>

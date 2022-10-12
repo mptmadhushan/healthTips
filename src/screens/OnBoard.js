@@ -5,39 +5,97 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  ScrollView,
   ImageBackground,
 } from 'react-native';
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import LinearGradient from 'react-native-linear-gradient';
+import sec1 from '../assets/sec1.jpg';
+import sec2 from '../assets/sec2.jpg';
+import sec3 from '../assets/sec3.jpg';
+import sec4 from '../assets/sec4.jpg';
 export default function OnBoard({navigation}) {
   return (
     <ImageBackground
       style={styles.container}
       source={require('../assets/images/arBg.jpeg')}>
-      <LinearGradient colors={['transparent', 'white']} style={styles.overlay}>
-        <View style={styles.centerFlex}>
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            style={{
-              width: SIZES.width * 0.3,
-              height: SIZES.width * 0.3,
-            }}
-          />
-        </View>
+      {/* <LinearGradient
+      colors={[COLORS.black, COLORS.primary, COLORS.black]}
+      style={styles.mainBody}
+      start={{x: 0, y: 0.5}}
+      end={{x: 1, y: 0.5}}
+      locations={[0, 0.7, 0.9]}> */}
+      <ScrollView
+        contentContainerStyle={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          alignContent: 'center',
+        }}>
         <Text style={styles.title2}>
           Let's predict your future health and consequences
         </Text>
-        <Text style={styles.title}>Culpa consectetur tempor qui ex Lorem.</Text>
         <TouchableOpacity
-          onPress={() => {
-            // navigation.navigate('Home');
-            navigation.navigate('LogIn');
-          }}
-          style={styles.btn}>
-          <Text style={styles.btnText}>Let's Start</Text>
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate('Details')}>
+          <View style={styles.centerFlex}>
+            <Image
+              source={sec1}
+              resizeMode="cover"
+              style={{
+                width: '100%',
+                marginTop: -4,
+                height: SIZES.height * 0.2,
+              }}
+            />
+            <Text style={styles.title}>
+              predicting non-communicable deceases and obesity and recommencing
+              health tips.
+            </Text>
+          </View>
         </TouchableOpacity>
-      </LinearGradient>
+        <View style={styles.centerFlex}>
+          <Image
+            source={sec2}
+            resizeMode="cover"
+            style={{
+              width: '100%',
+              marginTop: -4,
+              height: SIZES.height * 0.2,
+            }}
+          />
+          <Text style={styles.title}>
+            Start tracking food items and symptoms
+          </Text>
+        </View>
+        <View style={styles.centerFlex}>
+          <Image
+            source={sec3}
+            resizeMode="cover"
+            style={{
+              width: '100%',
+              marginTop: -4,
+              height: SIZES.height * 0.2,
+            }}
+          />
+          <Text style={styles.title}>
+            Start tracking food items and symptoms
+          </Text>
+        </View>
+        <View style={styles.centerFlex}>
+          <Image
+            source={sec4}
+            resizeMode="cover"
+            style={{
+              width: '100%',
+              marginTop: -4,
+              height: SIZES.height * 0.2,
+            }}
+          />
+          <Text style={styles.title}>
+            Start tracking food items and symptoms
+          </Text>
+        </View>
+      </ScrollView>
     </ImageBackground>
   );
 }
@@ -47,9 +105,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   overlay: {
-    marginTop: SIZES.height * 0.4,
+    // marginTop: SIZES.height * 0.4,
     // backgroundColor: 'rgba(255,0,0,0.5)',
-    height: SIZES.height * 0.6,
+    height: SIZES.height,
     alignItems: 'center',
   },
   btn: {
@@ -73,15 +131,21 @@ const styles = StyleSheet.create({
   btnText: {
     color: COLORS.white,
   },
+  centerFlex: {
+    backgroundColor: COLORS.primary,
+    width: SIZES.width * 0.8,
+    marginTop: 10,
+    borderRadius: 20,
+  },
   title: {
-    color: COLORS.black,
+    color: COLORS.white,
     fontSize: 18,
-    marginTop: SIZES.height * 0.06,
+    // marginTop: SIZES.height * 0.06,
     textAlign: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   title2: {
-    marginTop: SIZES.height * 0.1,
+    marginTop: SIZES.height * 0.05,
     color: COLORS.black,
     fontWeight: 'bold',
     fontSize: 28,

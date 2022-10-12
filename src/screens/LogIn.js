@@ -21,7 +21,7 @@ import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import {login} from '../api/authAPI';
 import {storeUserToken, getUserToken} from '../shared/asyncStorage';
-import {setClientToken} from '../shared/axios';
+// import {setClientToken} from '../shared/axios';
 // import {useDispatch} from 'react-redux';
 // import {authSuccess} from '../redux/authSlice';
 
@@ -35,15 +35,15 @@ const LoginScreen = ({navigation}) => {
 
   const passwordInputRef = createRef();
   // const dispatch = useDispatch();
-
+  //
   useEffect(() => {
-    getUserToken().then(token => {
-      if (token) {
-        setClientToken(token);
-        // dispatch(authSuccess(token));
-        navigation.navigate('Login');
-      }
-    });
+    // getUserToken().then(token => {
+    //   if (token) {
+    //     setClientToken(token);
+    //     dispatch(authSuccess(token));
+    //     navigation.navigate('Login');
+    //   }
+    // });
   });
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);

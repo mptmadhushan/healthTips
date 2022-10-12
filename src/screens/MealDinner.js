@@ -12,6 +12,7 @@ import {
   Text,
   ScrollView,
   Image,
+  Picker,
   ImageBackground,
   Keyboard,
   TouchableOpacity,
@@ -37,19 +38,18 @@ const DetailScreen = ({navigation}) => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
   const onPressReg = () => {
-    const payload = {
-      username: userName,
-      email: userEmail,
-      password: userPassword,
-      roles: ['user'],
-    };
-
-    setLoading(true);
-    console.log(payload);
+    // const payload = {
+    //   username: userName,
+    //   email: userEmail,
+    //   password: userPassword,
+    //   roles: ['user'],
+    // };
+    // setLoading(true);
+    // console.log(payload);
   };
   return (
     <ImageBackground
-      source={require('../assets/images/arBg.jpeg')}
+      source={require('../assets/images/regBg.jpeg')}
       style={styles.mainBody}>
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -59,11 +59,49 @@ const DetailScreen = ({navigation}) => {
           width: SIZES.width,
           alignItems: 'center',
           alignContent: 'center',
-          backgroundColor: 'rgba(0,0,0,0.4)',
+          backgroundColor: 'rgba(0,0,0,0.5)',
         }}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Text style={styles.title}>Enter your Details</Text>
+          <Text style={styles.title}>Meal Plan</Text>
+          <View style={styles.rowFlex}>
+            {/* <View style={styles.SectionStyle}>
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                activeOpacity={0.5}
+                onPress={() => onPressReg()}>
+                <Text style={styles.buttonTextStyle}>Breakfast</Text>
+              </TouchableOpacity>
+            </View> */}
+
+            {/* <View style={styles.SectionStyle}>
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                activeOpacity={0.5}
+                onPress={() => navigation.navigate('Meal')}>
+                <Text style={styles.buttonTextStyle}>Lunch</Text>
+              </TouchableOpacity>
+            </View> */}
+          </View>
+          {/* <View style={styles.rowFlex}>
+            <View style={styles.SectionStyle}>
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                activeOpacity={0.5}
+                onPress={() => onPressReg()}>
+                <Text style={styles.buttonTextStyle}>Dinner</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.SectionStyle}>
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                activeOpacity={0.5}
+                onPress={() => navigation.navigate('Meal')}>
+                <Text style={styles.buttonTextStyle}>Other</Text>
+              </TouchableOpacity>
+            </View>
+          </View> */}
           <View style={styles.rowFlex}>
             <View style={styles.SectionStyle}>
               <TextInput
@@ -72,7 +110,7 @@ const DetailScreen = ({navigation}) => {
                   userNameError ? styles.inputStyleError : '',
                 ]}
                 onChangeText={UserName => setUserName(UserName)}
-                placeholder="User Name"
+                placeholder="Enter your meal 1 (g)"
                 placeholderTextColor={COLORS.white}
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -93,7 +131,7 @@ const DetailScreen = ({navigation}) => {
                   userNameError ? styles.inputStyleError : '',
                 ]}
                 onChangeText={UserEmail => setUserEmail(UserEmail)}
-                placeholder="Email"
+                placeholder="Enter your meal 2 (kg/ml)"
                 placeholderTextColor={COLORS.white}
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -115,7 +153,7 @@ const DetailScreen = ({navigation}) => {
                   userNameError ? styles.inputStyleError : '',
                 ]}
                 onChangeText={UserName => setUserName(UserName)}
-                placeholder="Age"
+                placeholder="Enter your meal 3 (kg/ml)"
                 placeholderTextColor={COLORS.white}
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -136,7 +174,7 @@ const DetailScreen = ({navigation}) => {
                   userNameError ? styles.inputStyleError : '',
                 ]}
                 onChangeText={UserName => setUserName(UserName)}
-                placeholder="Height"
+                placeholder="Enter your meal 4 (kg/ml)"
                 placeholderTextColor={COLORS.white}
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -157,28 +195,7 @@ const DetailScreen = ({navigation}) => {
                   userNameError ? styles.inputStyleError : '',
                 ]}
                 onChangeText={UserName => setUserName(UserName)}
-                placeholder="Weight"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
-          </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Gender"
+                placeholder="Enter your meal 5 (kg/ml)"
                 placeholderTextColor={COLORS.white}
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -196,59 +213,12 @@ const DetailScreen = ({navigation}) => {
               style={styles.buttonStyle}
               activeOpacity={0.5}
               onPress={() => onPressReg()}>
-              <Text style={styles.buttonTextStyle}>Done</Text>
+              <Text style={styles.buttonTextStyle}>Dinner</Text>
             </TouchableOpacity>
-          </View>
-          <View style={{marginTop: 35}} />
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Your BMI Value"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                disabled
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
-          </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                disabled
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Your daily needs"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
-          </View>
-          <View style={styles.centerFlex}>
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
-              onPress={() => navigation.navigate('Meal')}>
+              onPress={() => navigation.navigate('MealOther')}>
               <Text style={styles.buttonTextStyle}>Next</Text>
             </TouchableOpacity>
           </View>
@@ -284,6 +254,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   title: {
+    marginTop: -30,
     color: COLORS.white,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -306,12 +277,14 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
     borderWidth: 0,
     color: COLORS.white,
     height: 40,
-    width: 130,
+    width: 280,
     alignItems: 'center',
     borderRadius: 10,
+    marginBottom: 20,
     justifyContent: 'center',
   },
   buttonTextStyle: {

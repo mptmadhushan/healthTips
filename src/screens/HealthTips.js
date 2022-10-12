@@ -27,6 +27,7 @@ export default function OnBoard({navigation, route}) {
   const api = {foo: 'bar', foz: 'baz'};
   return (
     <ImageBackground
+      resizeMode="center"
       style={styles.container}
       source={require('../assets/images/arBg.jpeg')}>
       <LinearGradient
@@ -46,7 +47,7 @@ export default function OnBoard({navigation, route}) {
           {result &&
             result.map(list => (
               <Text style={styles.des} key={list.index}>
-                ⦿ {list.name}
+                {list.name}
                 {'\n'}⦿{list.des}
               </Text>
             ))}
@@ -54,7 +55,7 @@ export default function OnBoard({navigation, route}) {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('MoreUserData');
+            navigation.navigate('OnBoard');
           }}
           style={styles.btn}>
           <Text style={styles.btnText}>Done</Text>
@@ -100,13 +101,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 20,
     fontWeight: 'bold',
+    marginBottom: 20,
   },
   des: {
     color: COLORS.third,
-    fontSize: 20,
+    fontSize: 15,
     textAlign: 'center',
     paddingHorizontal: 20,
-    marginTop: 10,
+    marginTop: 15,
   },
   title2: {
     marginTop: SIZES.height * 0.3,

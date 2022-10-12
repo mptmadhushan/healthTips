@@ -27,6 +27,9 @@ export default function OnBoard({navigation}) {
         <TouchableOpacity disabled style={styles.btn}>
           <Text style={styles.btnText}>Cholesterol :{respo.Cholesterol}</Text>
         </TouchableOpacity>
+        <TouchableOpacity disabled style={styles.btn}>
+          <Text style={styles.btnText}>Diabetes :{respo.Diabetes}</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('HealthTips');

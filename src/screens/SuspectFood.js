@@ -59,7 +59,7 @@ const RegisterScreen = ({navigation}) => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
   const onPressReg = () => {
-    navigation.navigate('BMI');
+    navigation.navigate('Symptoms');
     const payload = {
       username: userName,
       email: userEmail,
