@@ -63,246 +63,241 @@ const DetailScreen = ({navigation}) => {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
-          flex: 1,
           justifyContent: 'center',
-          width: SIZES.width,
           alignItems: 'center',
           alignContent: 'center',
           backgroundColor: 'rgba(0,0,0,0.4)',
         }}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Text style={styles.title}>Enter your Details</Text>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="User Name"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        <Text style={styles.title}>Enter your Details</Text>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="User Name"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserEmail => setUserEmail(UserEmail)}
-                placeholder="Email"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserEmail => setUserEmail(UserEmail)}
+              placeholder="Email"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Age"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Age"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Height"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Height"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Weight"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Weight"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Gender"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Gender"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Gender"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Gender"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Jobs"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Jobs"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.centerFlex}>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={() => onPressReg()}>
-              <Text style={styles.buttonTextStyle}>Done</Text>
-            </TouchableOpacity>
+        </View>
+        <View style={styles.centerFlex}>
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={() => onPressReg()}>
+            <Text style={styles.buttonTextStyle}>Done</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{marginTop: 35}} />
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Your BMI Value"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              disabled
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={{marginTop: 35}} />
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Your BMI Value"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                disabled
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              disabled
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Your daily needs"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                disabled
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Your daily needs"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
-          </View>
-          <View style={styles.centerFlex}>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('Meal')}>
-              <Text style={styles.buttonTextStyle}>Nesxt</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
+        </View>
+        <View style={styles.centerFlex}>
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('Meal')}>
+            <Text style={styles.buttonTextStyle}>Next</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </ImageBackground>
   );
