@@ -21,9 +21,7 @@ export default function OnBoard({navigation}) {
       <LinearGradient colors={['transparent', 'white']} style={styles.overlay}>
         <Text style={styles.title2}>your meal plan is{'\n'} an unhealthy</Text>
         <Text style={styles.title}> {respo.Healthyness}</Text>
-        <TouchableOpacity disabled e={styles.btn}>
-          <Text style={styles.btnText}>Diabetes :{respo.Diabetes}</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity disabled style={styles.btn}>
           <Text style={styles.btnText}>Cholesterol :{respo.Cholesterol}</Text>
         </TouchableOpacity>

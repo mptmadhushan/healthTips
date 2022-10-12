@@ -136,7 +136,12 @@ const RegisterScreen = ({navigation}) => {
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
-                buttonStyle={{minWidth: SIZES.width * 0.7}}
+                buttonStyle={{
+                  minWidth: SIZES.width * 0.7,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  fontColor: 'white',
+                }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   // text represented after item is selected
                   // if data array is an array of objects then return selectedItem.property to render after item is selected
@@ -161,7 +166,12 @@ const RegisterScreen = ({navigation}) => {
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
-                buttonStyle={{minWidth: SIZES.width * 0.7}}
+                buttonStyle={{
+                  minWidth: SIZES.width * 0.7,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  fontColor: 'white',
+                }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   // text represented after item is selected
                   // if data array is an array of objects then return selectedItem.property to render after item is selected
@@ -186,7 +196,12 @@ const RegisterScreen = ({navigation}) => {
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
-                buttonStyle={{minWidth: SIZES.width * 0.7}}
+                buttonStyle={{
+                  minWidth: SIZES.width * 0.7,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  fontColor: 'white',
+                }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   // text represented after item is selected
                   // if data array is an array of objects then return selectedItem.property to render after item is selected
@@ -210,7 +225,12 @@ const RegisterScreen = ({navigation}) => {
               <SelectDropdown
                 dropdownStyle={{minWidth: SIZES.width * 0.7}}
                 data={yesno}
-                buttonStyle={{minWidth: SIZES.width * 0.7}}
+                buttonStyle={{
+                  minWidth: SIZES.width * 0.7,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  fontColor: 'white',
+                }}
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
@@ -237,7 +257,12 @@ const RegisterScreen = ({navigation}) => {
               <SelectDropdown
                 dropdownStyle={{minWidth: SIZES.width * 0.7}}
                 data={yesno}
-                buttonStyle={{minWidth: SIZES.width * 0.7}}
+                buttonStyle={{
+                  minWidth: SIZES.width * 0.7,
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  fontColor: 'white',
+                }}
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}

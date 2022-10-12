@@ -48,12 +48,12 @@ const RegisterScreen = ({navigation}) => {
   const yesno = ['yes', 'no'];
   const yesnom = ['yes', 'no', 'I’m not Aware'];
   const data = [
-    {id: 1, name: 'Teacher'},
-    {id: 2, name: 'Nurse'},
-    {id: 3, name: 'Police Officer'},
-    {id: 4, name: 'Construction work'},
-    {id: 5, name: 'Farming'},
-    {id: 6, name: 'Desk job'},
+    {id: 1, name: 'Milk'},
+    {id: 2, name: 'Eggs'},
+    {id: 3, name: 'Wheat'},
+    {id: 4, name: 'Fish'},
+    {id: 5, name: 'Corn'},
+    {id: 6, name: 'Raw Vegetables'},
   ];
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);

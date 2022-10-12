@@ -115,7 +115,6 @@ const DetailScreen = ({navigation}) => {
               />
             </View>
           </View>
-
           <View style={styles.rowFlex}>
             <View style={styles.SectionStyle}>
               <TextInput
@@ -200,6 +199,48 @@ const DetailScreen = ({navigation}) => {
               />
             </View>
           </View>
+          <View style={styles.rowFlex}>
+            <View style={styles.SectionStyle}>
+              <TextInput
+                style={[
+                  styles.inputStyle,
+                  userNameError ? styles.inputStyleError : '',
+                ]}
+                onChangeText={UserName => setUserName(UserName)}
+                placeholder="Gender"
+                placeholderTextColor={COLORS.white}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  passwordInputRef.current && passwordInputRef.current.focus()
+                }
+                underlineColorAndroid="#f000"
+                blurOnSubmit={false}
+              />
+            </View>
+          </View>
+          <View style={styles.rowFlex}>
+            <View style={styles.SectionStyle}>
+              <TextInput
+                style={[
+                  styles.inputStyle,
+                  userNameError ? styles.inputStyleError : '',
+                ]}
+                onChangeText={UserName => setUserName(UserName)}
+                placeholder="Jobs"
+                placeholderTextColor={COLORS.white}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  passwordInputRef.current && passwordInputRef.current.focus()
+                }
+                underlineColorAndroid="#f000"
+                blurOnSubmit={false}
+              />
+            </View>
+          </View>
           <View style={styles.centerFlex}>
             <TouchableOpacity
               style={styles.buttonStyle}
@@ -250,28 +291,6 @@ const DetailScreen = ({navigation}) => {
                 }
                 underlineColorAndroid="#f000"
                 blurOnSubmit={false}
-              />
-            </View>
-          </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <SelectDropdown
-                dropdownStyle={{minWidth: SIZES.width * 0.7}}
-                data={data}
-                onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index);
-                }}
-                buttonStyle={{minWidth: SIZES.width * 0.7}}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  // text represented after item is selected
-                  // if data array is an array of objects then return selectedItem.property to render after item is selected
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  // text represented for each item in dropdown
-                  // if data array is an array of objects then return item.property to represent item in dropdown
-                  return item;
-                }}
               />
             </View>
           </View>
