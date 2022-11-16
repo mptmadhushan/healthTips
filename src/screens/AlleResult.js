@@ -96,10 +96,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title2: {
-    marginTop: SIZES.height * 0.3,
+    marginTop: SIZES.height * 0.2,
+    marginBottom: SIZES.height * 0.1,
     color: COLORS.black,
     fontWeight: 'bold',
     fontSize: 30,
+    padding: 10,
     textAlign: 'center',
   },
 });

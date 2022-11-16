@@ -26,7 +26,7 @@ import {authRegAPI} from '../api/detailsApi';
 import CheckboxList from 'rn-checkbox-list';
 
 // import DatePicker from 'react-native-date-picker';
-
+import axios from 'axios';
 const RegisterScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
@@ -55,36 +55,43 @@ const RegisterScreen = ({navigation}) => {
     {id: 5, name: 'Corn'},
     {id: 6, name: 'Raw Vegetables'},
   ];
+  const foodsToSend = {
+    amount_taken: 'Large Amount',
+    symptoms_list: [
+      'Hives or a rash anywhere on the body',
+      'Tingling or itching in the mouth',
+      'Stomach pains',
+      'Cramping',
+      'Gas',
+      'Dizziness or lightheadedness',
+    ],
+    food_list: ['Dairy', 'Fruit', 'Citrus Fruit', 'Beans'],
+  };
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
-  const onPressReg = () => {
-    navigation.navigate('Symptoms');
-    const payload = {
-      username: userName,
-      email: userEmail,
-      password: userPassword,
-      roles: ['user'],
-    };
 
-    setLoading(true);
-    console.log(payload);
-    authRegAPI(payload)
-      .then(response => {
-        if (response.error) {
-          console.log('error__<', response.error);
-          showToast('try again');
-          return;
-        }
-        const {data} = response;
-        console.log('res', response.data);
-        console.log('token', data.access);
+  const onPressReg = () => {
+    const data = {
+      amount_taken: '',
+      symptoms_list: [],
+    
+      food_list: [],
+     
+    };
+    axios
+      .post('http://127.0.0.1:8000/api/v1.0/allergy/', foodsToSend, {
+        headers: {
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
+        },
       })
-      .catch(error => {
-        console.log('error-->', error);
+      .then(res => {
+        console.log(res.data);
+        navigation.navigate('Symptoms');
       })
-      .finally(() => {
-        setLoading(false);
+      .catch(err => {
+        console.log(err);
+        navigation.navigate('Symptoms');
       });
   };
   return (
@@ -98,25 +105,26 @@ const RegisterScreen = ({navigation}) => {
           justifyContent: 'center',
           width: SIZES.width,
           alignItems: 'center',
-          backgroundColor: 'rgba(0,0,0,0.2)',
+          // backgroundColor: 'rgba(0,0,0,0.2)',
           alignContent: 'center',
         }}>
         <KeyboardAvoidingView
+          style={{padding: 40}}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <View style={styles.centerFlex}>
             <Text style={styles.buttonTextStyle}>
-              Let’s discover /suspect food and triggers
+              Let’s discover / suspect food and triggers
             </Text>
           </View>
           <View>
-            <View>
+            {/* <View>
               <TouchableOpacity
                 style={styles.buttonStyle}
                 activeOpacity={0.5}
                 onPress={() => setOpen(true)}>
                 <Text style={styles.buttonTextStye}>Pick a date</Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             {/* <DatePicker
               modal
@@ -140,61 +148,64 @@ const RegisterScreen = ({navigation}) => {
               borderBottomWidth: 1,
               textColor: '#fff',
               color: '#fff',
+              padding: 20,
             }}
-            checkboxProp={{boxType: 'square'}} // iOS (supported from v0.3.0)
+            checkboxProp={{boxType: 'circle'}} // iOS (supported from v0.3.0)
           />
-          <Text style={styles.buttonTextSty}>Apart from the above list </Text>
-          <TextInput
-            style={[
-              styles.inputStyle,
-              userNameError ? styles.inputStyleError : '',
-            ]}
-            onChangeText={UserName => setUserName(UserName)}
-            placeholder="Amount Taken"
-            placeholderTextColor={COLORS.white}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            returnKeyType="next"
-            onSubmitEditing={() =>
-              passwordInputRef.current && passwordInputRef.current.focus()
-            }
-            underlineColorAndroid="#f000"
-            blurOnSubmit={false}
-          />
-          <TextInput
-            style={[
-              styles.inputStyle,
-              userNameError ? styles.inputStyleError : '',
-            ]}
-            onChangeText={UserName => setUserName(UserName)}
-            placeholder="Food item 1"
-            placeholderTextColor={COLORS.white}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            returnKeyType="next"
-            onSubmitEditing={() =>
-              passwordInputRef.current && passwordInputRef.current.focus()
-            }
-            underlineColorAndroid="#f000"
-            blurOnSubmit={false}
-          />
-          <TextInput
-            style={[
-              styles.inputStyle,
-              userNameError ? styles.inputStyleError : '',
-            ]}
-            onChangeText={UserName => setUserName(UserName)}
-            placeholder="Food item 2"
-            placeholderTextColor={COLORS.white}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            returnKeyType="next"
-            onSubmitEditing={() =>
-              passwordInputRef.current && passwordInputRef.current.focus()
-            }
-            underlineColorAndroid="#f000"
-            blurOnSubmit={false}
-          />
+          <View style={{margin: 20}}>
+            <Text style={styles.buttonTextSty}>Apart from the above list </Text>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Amount Taken"
+              placeholderTextColor={COLORS.black}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Food item 1"
+              placeholderTextColor={COLORS.black}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setUserName(UserName)}
+              placeholder="Food item 2"
+              placeholderTextColor={COLORS.black}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
+          </View>
           <View style={styles.centerFlex}>
             <TouchableOpacity
               style={styles.buttonStyle}
@@ -258,8 +269,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
   },
+
   buttonTextStyle: {
-    color: COLORS.secondary,
+    color: COLORS.black,
     fontSize: 25,
     marginTop: 20,
     marginLeft: 5,
@@ -273,7 +285,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   buttonTextSty: {
-    color: '#FFFFFF',
+    color: COLORS.black,
+    margin: 20,
     fontSize: 15,
     fontWeight: 'bold',
   },
@@ -281,10 +294,10 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     paddingLeft: 15,
     paddingRight: 15,
-    width: SIZES.width * 0.95,
+    width: SIZES.width * 0.75,
     margin: 10,
     borderWidth: 1,
-    borderColor: '#ffff',
+    borderColor: COLORS.black,
     borderRadius: 20,
   },
   inputStyleError: {

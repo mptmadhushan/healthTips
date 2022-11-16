@@ -55,6 +55,9 @@ const RegisterScreen = ({navigation}) => {
     {id: 5, name: 'swallowing'},
     {id: 6, name: 'Swollen lips'},
     {id: 7, name: 'Swollen tongue, or throat'},
+    {id: 8, name: 'stomach pains'},
+    {id: 8, name: 'Cramping'},
+    {id: 8, name: 'Gas'},
   ];
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
@@ -109,14 +112,14 @@ const RegisterScreen = ({navigation}) => {
             </Text>
           </View>
           <View>
-            <View style={styles.centerFlex}>
+            {/* <View style={styles.centerFlex}>
               <TouchableOpacity
                 style={styles.buttonStyle}
                 activeOpacity={0.5}
                 onPress={() => setOpen(true)}>
                 <Text style={styles.buttonTextStye}>Pick a date</Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             {/* <DatePicker
               modal
@@ -132,7 +135,7 @@ const RegisterScreen = ({navigation}) => {
             /> */}
           </View>
           <CheckboxList
-            theme="red"
+            theme="green"
             listItems={data}
             onChange={({ids, items}) => console.log('My updated list :: ', ids)}
             listItemStyle={{
@@ -140,6 +143,7 @@ const RegisterScreen = ({navigation}) => {
               borderBottomWidth: 1,
               textColor: '#fff',
               color: '#fff',
+              padding: 20,
             }}
             checkboxProp={{boxType: 'square'}}
           />
@@ -174,9 +178,10 @@ const styles = StyleSheet.create({
     marginLeft: SIZES.width * 0.3,
   },
   buttonTextStyle: {
-    color: COLORS.secondary,
+    color: COLORS.black,
     fontSize: 25,
     marginTop: 20,
+    marginBottom: 20,
     marginLeft: 5,
     padding: 5,
     fontWeight: 'bold',
@@ -215,6 +220,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     marginTop: 10,
+    marginBottom: 20,
   },
 
   buttonTextStye: {

@@ -184,6 +184,7 @@ const DetailScreen = ({navigation}) => {
         <View style={styles.rowFlex}>
           <View style={styles.checkboxContainer}>
             <CheckBox
+            // tintColors={{'white' }}
               disabled={false}
               value={toggleFamily}
               onValueChange={newValue => setToggleCheckBox(newValue)}

@@ -65,9 +65,7 @@ const DetailScreen = ({navigation}) => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Text style={styles.title}>Meal Plan</Text>
           <View style={styles.rowFlex}>
-            <View
-            style={{margin: 15}}
-              >
+            <View style={{margin: 15}}>
               <Text style={styles.buttonTextStyle}>Dinner</Text>
             </View>
             {/* <View style={styles.SectionStyle}>

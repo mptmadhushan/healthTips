@@ -17,12 +17,13 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import APIKit, {setClientToken} from '../helpers/apiKit';
 // import {authRegAPI} from '../api/authRegAPI';
 import SelectDropdown from 'react-native-select-dropdown';
-
+import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 const RegisterScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
@@ -36,7 +37,16 @@ const RegisterScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
   const [userNameError, setUserNameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+
+  const [foodAlg, setFoodAlg] = useState(false);
+
+  const [sex, setSex] = useState(false);
+
+  const [famFood, setFamFood] = useState(false);
+
+  const [drug, setDrug] = useState(false);
+
+  const [toggleFamily, setToggleCheckBox] = useState(false);
 
   const passwordInputRef = createRef();
   const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
@@ -52,39 +62,33 @@ const RegisterScreen = ({navigation}) => {
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
-  // const onPressReg = () => {
-  //   navigation.navigate('BMI');
-  //   const payload = {
-  //     username: userName,
-  //     email: userEmail,
-  //     password: userPassword,
-  //     roles: ['user'],
-  //   };
-
-  //   setLoading(true);
-  //   console.log(payload);
-  //   authRegAPI(payload)
-  //     .then(response => {
-  //       if (response.error) {
-  //         console.log('error__<', response.error);
-  //         showToast('try again');
-  //         return;
-  //       }
-  //       const {data} = response;
-  //       console.log('res', response.data);
-  //       console.log('token', data.access);
-  //     })
-  //     .catch(error => {
-  //       console.log('error-->', error);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // };
+  const onPressSend = () => {
+    const data = {
+      age: 25,
+      sex: sex,
+      allergies: foodAlg,
+      family_history: famFood,
+      drug_allergies: drug,
+    };
+    axios
+      .post('http://127.0.0.1:8000/api/v1.0/user/', data, {
+        headers: {
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
+        },
+      })
+      .then(res => {
+        console.log(res.data);
+        navigation.navigate('SuspectFood');
+      })
+      .catch(err => {
+        console.log(err);
+        navigation.navigate('SuspectFood');
+      });
+  };
   return (
     <ImageBackground
       style={styles.mainBody}
-      source={require('../assets/images/regBg.jpeg')}>
+      source={require('../assets/images/arBg.jpeg')}>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
@@ -93,14 +97,15 @@ const RegisterScreen = ({navigation}) => {
           width: SIZES.width,
           alignItems: 'center',
           alignContent: 'center',
-          backgroundColor: 'rgba(0,0,0,0.5)',
+          // backgroundColor: 'rgba(0,0,0,0.5)',
         }}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <View style={styles.centerFlex}>
-            <Text style={styles.buttonTextStyle}>
-              Let’s get to know about you!
-            </Text>
+            <Text style={styles.title}>Let’s get to know{'\n'} about you!</Text>
+          </View>
+          <View style={styles.rowFlex}>
+            <Text style={styles.buttonTextStyle}>Whats your name?</Text>
           </View>
           <View style={styles.rowFlex}>
             <View style={styles.SectionStyle}>
@@ -111,7 +116,7 @@ const RegisterScreen = ({navigation}) => {
                 ]}
                 onChangeText={UserName => setUserName(UserName)}
                 placeholder="User Name"
-                placeholderTextColor={COLORS.white}
+                placeholderTextColor={COLORS.black}
                 autoCapitalize="none"
                 keyboardType="email-address"
                 returnKeyType="next"
@@ -129,30 +134,23 @@ const RegisterScreen = ({navigation}) => {
             </Text>
           </View>
           <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <SelectDropdown
-                dropdownStyle={{minWidth: SIZES.width * 0.7}}
-                data={yesnom}
-                onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index);
-                }}
-                buttonStyle={{
-                  minWidth: SIZES.width * 0.7,
-                  backgroundColor: 'transparent',
-                  color: 'white',
-                  fontColor: 'white',
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  // text represented after item is selected
-                  // if data array is an array of objects then return selectedItem.property to render after item is selected
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  // text represented for each item in dropdown
-                  // if data array is an array of objects then return item.property to represent item in dropdown
-                  return item;
-                }}
-              />
+            <View style={styles.rowFlex}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox
+                  // tintColors={{'white' }}
+                  disabled={false}
+                  value={foodAlg}
+                  onValueChange={() => setFoodAlg(!foodAlg)}
+                />
+                <Text style={styles.label}>Yes</Text>
+                <CheckBox
+                  // tintColors={{'white' }}
+                  disabled={false}
+                  value={!foodAlg}
+                  onValueChange={() => setFoodAlg(!foodAlg)}
+                />
+                <Text style={styles.label}>No</Text>
+              </View>
             </View>
           </View>
           <View style={styles.rowFlex}>
@@ -160,28 +158,22 @@ const RegisterScreen = ({navigation}) => {
           </View>
           <View style={styles.rowFlex}>
             <View style={styles.SectionStyle}>
-              <SelectDropdown
-                dropdownStyle={{minWidth: SIZES.width * 0.7}}
-                data={yesnoage}
-                onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index);
-                }}
-                buttonStyle={{
-                  minWidth: SIZES.width * 0.7,
-                  backgroundColor: 'transparent',
-                  color: 'white',
-                  fontColor: 'white',
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  // text represented after item is selected
-                  // if data array is an array of objects then return selectedItem.property to render after item is selected
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  // text represented for each item in dropdown
-                  // if data array is an array of objects then return item.property to represent item in dropdown
-                  return item;
-                }}
+              <TextInput
+                style={[
+                  styles.inputStyle,
+                  userNameError ? styles.inputStyleError : '',
+                ]}
+                onChangeText={age => setAge(age)}
+                placeholder="Age"
+                placeholderTextColor={COLORS.black}
+                autoCapitalize="none"
+                keyboardType="phone-pad"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  passwordInputRef.current && passwordInputRef.current.focus()
+                }
+                underlineColorAndroid="#f000"
+                blurOnSubmit={false}
               />
             </View>
           </View>
@@ -189,62 +181,51 @@ const RegisterScreen = ({navigation}) => {
             <Text style={styles.buttonTextStyle}>Your sex?</Text>
           </View>
           <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <SelectDropdown
-                dropdownStyle={{minWidth: SIZES.width * 0.7}}
-                data={yesnsex}
-                onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index);
-                }}
-                buttonStyle={{
-                  minWidth: SIZES.width * 0.7,
-                  backgroundColor: 'transparent',
-                  color: 'white',
-                  fontColor: 'white',
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  // text represented after item is selected
-                  // if data array is an array of objects then return selectedItem.property to render after item is selected
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  // text represented for each item in dropdown
-                  // if data array is an array of objects then return item.property to represent item in dropdown
-                  return item;
-                }}
-              />
+            {/* <View style={styles.SectionStyle}> */}
+            <View style={styles.rowFlex}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox
+                  // tintColors={{'white' }}
+                  disabled={false}
+                  value={sex}
+                  onValueChange={() => setSex(!sex)}
+                />
+                <Text style={styles.label}>Male</Text>
+                <CheckBox
+                  // tintColors={{'white' }}
+                  disabled={false}
+                  value={!sex}
+                  onValueChange={() => setSex(!sex)}
+                />
+                <Text style={styles.label}>Female</Text>
+              </View>
             </View>
           </View>
+          {/* </View> */}
           <View style={styles.rowFlex}>
             <Text style={styles.buttonTextStyle}>
               Family History on food allergies?
             </Text>
           </View>
           <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <SelectDropdown
-                dropdownStyle={{minWidth: SIZES.width * 0.7}}
-                data={yesno}
-                buttonStyle={{
-                  minWidth: SIZES.width * 0.7,
-                  backgroundColor: 'transparent',
-                  color: 'white',
-                  fontColor: 'white',
-                }}
-                onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index);
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  // text represented after item is selected
-                  // if data array is an array of objects then return selectedItem.property to render after item is selected
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  // text represented for each item in dropdown
-                  // if data array is an array of objects then return item.property to represent item in dropdown
-                  return item;
-                }}
-              />
+            {/* <View style={styles.SectionStyle}> */}
+            <View style={styles.rowFlex}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox
+                  // tintColors={{'white' }}
+                  disabled={false}
+                  value={famFood}
+                  onValueChange={() => setFamFood(!famFood)}
+                />
+                <Text style={styles.label}>Yes</Text>
+                <CheckBox
+                  // tintColors={{'white' }}
+                  disabled={false}
+                  value={!famFood}
+                  onValueChange={() => setFamFood(!famFood)}
+                />
+                <Text style={styles.label}>No</Text>
+              </View>
             </View>
           </View>
           <View style={styles.rowFlex}>
@@ -253,30 +234,24 @@ const RegisterScreen = ({navigation}) => {
             </Text>
           </View>
           <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <SelectDropdown
-                dropdownStyle={{minWidth: SIZES.width * 0.7}}
-                data={yesno}
-                buttonStyle={{
-                  minWidth: SIZES.width * 0.7,
-                  backgroundColor: 'transparent',
-                  color: 'white',
-                  fontColor: 'white',
-                }}
-                onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index);
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  // text represented after item is selected
-                  // if data array is an array of objects then return selectedItem.property to render after item is selected
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  // text represented for each item in dropdown
-                  // if data array is an array of objects then return item.property to represent item in dropdown
-                  return item;
-                }}
-              />
+            {/* <View style={styles.SectionStyle}> */}
+            <View style={styles.rowFlex}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox
+                  // tintColors={{'white' }}
+                  disabled={false}
+                  value={drug}
+                  onValueChange={newValue => setDrug(!drug)}
+                />
+                <Text style={styles.label}>Yes</Text>
+                <CheckBox
+                  // tintColors={{'white' }}
+                  disabled={false}
+                  value={!drug}
+                  onValueChange={() => setDrug(!drug)}
+                />
+                <Text style={styles.label}>No</Text>
+              </View>
             </View>
           </View>
           <View style={styles.centerFlex}>
@@ -284,7 +259,7 @@ const RegisterScreen = ({navigation}) => {
               style={styles.buttonStyle}
               activeOpacity={0.5}
               onPress={() => {
-                navigation.navigate('SuspectFood');
+                onPressSend();
               }}>
               <Text style={styles.buttonTextStye}>Next</Text>
             </TouchableOpacity>
@@ -311,6 +286,14 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginLeft: SIZES.width * 0.3,
   },
+  title: {
+    color: COLORS.black,
+    fontSize: 23,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
   rowFlex: {
     flexDirection: 'row',
     // flex: 1,
@@ -328,7 +311,7 @@ const styles = StyleSheet.create({
   SectionStyle: {
     // backgroundColor: COLORS.secondary,
     borderRadius: 10,
-    borderColor: COLORS.white,
+    borderColor: COLORS.primary,
     borderWidth: 1,
     height: 40,
     marginRight: 35,
@@ -346,9 +329,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonTextStyle: {
-    color: '#FFFFFF',
+    color: '#111',
     fontSize: 15,
     marginTop: 20,
+    fontWeight: 'bold',
     marginLeft: 5,
   },
   buttonTextStye: {
@@ -363,9 +347,11 @@ const styles = StyleSheet.create({
   inputStyle: {
     flex: 1,
     color: COLORS.third,
-    paddingLeft: 15,
+    paddingLeft: 35,
     paddingRight: 15,
     width: SIZES.width * 0.7,
+    backgroundColor: 'white',
+    borderRadius: 30,
   },
   inputStyleError: {
     flex: 1,
@@ -389,5 +375,17 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     fontSize: 14,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+    marginTop: 10,
+    // width: SIZES.width * 0.7,
+    justifyContent: 'space-around',
+  },
+  label: {
+    // margin: 8,
+    color: '#111',
+    padding: 5,
   },
 });
