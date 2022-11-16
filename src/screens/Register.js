@@ -20,7 +20,7 @@ import {
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import APIKit, {setClientToken} from '../helpers/apiKit';
-import {authRegAPI} from '../api/authRegAPI';
+// import {authRegAPI} from '../api/authRegAPI';
 
 import AsyncStorage from '@react-native-community/async-storage';
 const RegisterScreen = ({navigation}) => {
@@ -42,35 +42,35 @@ const RegisterScreen = ({navigation}) => {
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
-  const onPressReg = () => {
-    navigation.navigate('BMI');
-    const payload = {
-      username: userName,
-      email: userEmail,
-      password: userPassword,
-      roles: ['user'],
-    };
+  // const onPressReg = () => {
+  //   navigation.navigate('BMI');
+  //   const payload = {
+  //     username: userName,
+  //     email: userEmail,
+  //     password: userPassword,
+  //     roles: ['user'],
+  //   };
 
-    setLoading(true);
-    console.log(payload);
-    authRegAPI(payload)
-      .then(response => {
-        if (response.error) {
-          console.log('error__<', response.error);
-          showToast('try again');
-          return;
-        }
-        const {data} = response;
-        console.log('res', response.data);
-        console.log('token', data.access);
-      })
-      .catch(error => {
-        console.log('error-->', error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+  //   setLoading(true);
+  //   console.log(payload);
+  //   authRegAPI(payload)
+  //     .then(response => {
+  //       if (response.error) {
+  //         console.log('error__<', response.error);
+  //         showToast('try again');
+  //         return;
+  //       }
+  //       const {data} = response;
+  //       console.log('res', response.data);
+  //       console.log('token', data.access);
+  //     })
+  //     .catch(error => {
+  //       console.log('error-->', error);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // };
   return (
     <ImageBackground
       style={styles.mainBody}

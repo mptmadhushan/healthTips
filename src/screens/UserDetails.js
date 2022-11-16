@@ -20,7 +20,7 @@ import {
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import APIKit, {setClientToken} from '../helpers/apiKit';
-import {authRegAPI} from '../api/authRegAPI';
+import {detailsApi} from '../api/detailsApi';
 
 import AsyncStorage from '@react-native-community/async-storage';
 const RegisterScreen = ({navigation}) => {
@@ -40,15 +40,16 @@ const RegisterScreen = ({navigation}) => {
   };
   const onPressReg = () => {
     const payload = {
-      username: userName,
-      email: userEmail,
-      password: userPassword,
-      roles: ['user'],
+      age: 25,
+      sex: male,
+      allergies: true,
+      family_history: false,
+      drug_allergies: false,
     };
 
     setLoading(true);
     console.log(payload);
-    authRegAPI(payload)
+    detailsApi(payload)
       .then(response => {
         if (response.error) {
           console.log('error__<', response.error);
@@ -91,7 +92,7 @@ const RegisterScreen = ({navigation}) => {
                 width: SIZES.width * 0.3,
                 height: SIZES.width * 0.3,
                 marginBottom: SIZES.height * 0.03,
-              marginTop: SIZES.height * 0.25,
+                marginTop: SIZES.height * 0.25,
               }}
             />
           </View>

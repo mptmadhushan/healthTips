@@ -65,12 +65,11 @@ const DetailScreen = ({navigation}) => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Text style={styles.title}>Meal Plan</Text>
           <View style={styles.rowFlex}>
-            <TouchableOpacity
-              style={styles.buttonStyle22}
-              activeOpacity={0.5}
-              onPress={() => onPressReg()}>
+            <View
+            style={{margin: 15}}
+              >
               <Text style={styles.buttonTextStyle}>Dinner</Text>
-            </TouchableOpacity>
+            </View>
             {/* <View style={styles.SectionStyle}>
               <TouchableOpacity
                 style={styles.buttonStyle}
@@ -276,6 +275,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: -30,
+    marginBottom: 40,
     color: COLORS.white,
     fontWeight: 'bold',
     textAlign: 'center',

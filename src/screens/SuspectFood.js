@@ -21,11 +21,11 @@ import {
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import APIKit, {setClientToken} from '../helpers/apiKit';
-import {authRegAPI} from '../api/authRegAPI';
+import {authRegAPI} from '../api/detailsApi';
 
 import CheckboxList from 'rn-checkbox-list';
 
-import DatePicker from 'react-native-date-picker';
+// import DatePicker from 'react-native-date-picker';
 
 const RegisterScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
@@ -118,7 +118,7 @@ const RegisterScreen = ({navigation}) => {
               </TouchableOpacity>
             </View>
 
-            <DatePicker
+            {/* <DatePicker
               modal
               open={open}
               date={date}
@@ -129,7 +129,7 @@ const RegisterScreen = ({navigation}) => {
               onCancel={() => {
                 setOpen(false);
               }}
-            />
+            /> */}
           </View>
           <CheckboxList
             theme="green"

@@ -147,13 +147,14 @@ const styles = StyleSheet.create({
     // marginTop: SIZES.height * 0.06,
     textAlign: 'center',
     paddingHorizontal: 10,
+    margin: 12,
   },
   title2: {
     marginTop: SIZES.height * 0.05,
     marginBottom: SIZES.height * 0.05,
     color: COLORS.black,
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: 22,
     textAlign: 'center',
   },
 });

@@ -17,21 +17,27 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+import {detailsApi} from '../api/detailsApi';
+
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
-import LinearGradient from 'react-native-linear-gradient';
-import CheckboxList from 'rn-checkbox-list';
-import SelectDropdown from 'react-native-select-dropdown';
-
+import CheckBox from '@react-native-community/checkbox';
 const DetailScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [userPasswordConf, setUserPasswordConf] = useState('');
+  const [gender, setGender] = useState('');
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
+  const [age, setAge] = useState('');
+
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
   const [userNameError, setUserNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [drugAl, setToggleDrug] = useState(false);
+  const [allergies,setAllergies] = useState(false);
+  const [toggleFamily, setToggleCheckBox] = useState(false);
 
   const passwordInputRef = createRef();
   const data = [
@@ -45,16 +51,36 @@ const DetailScreen = ({navigation}) => {
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
+ 
   const onPressReg = () => {
     const payload = {
-      username: userName,
-      email: userEmail,
-      password: userPassword,
-      roles: ['user'],
+      age: age,
+      sex: gender,
+      allergies: allergies,
+      family_history: toggleFamily,
+      drug_allergies: drugAl,
     };
 
     setLoading(true);
     console.log(payload);
+    detailsApi(payload)
+      .then(response => {
+        if (response.error) {
+          console.log('error__<', response.error);
+          showToast('try again');
+          return;
+        }
+        const {data} = response;
+        console.log('res', response.data);
+        console.log('token', data.access);
+        navigation.navigate('Login');
+      })
+      .catch(error => {
+        console.log('error-->', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <ImageBackground
@@ -65,10 +91,12 @@ const DetailScreen = ({navigation}) => {
         contentContainerStyle={{
           justifyContent: 'center',
           alignItems: 'center',
+          height: '100%',
           alignContent: 'center',
           backgroundColor: 'rgba(0,0,0,0.4)',
         }}>
         <Text style={styles.title}>Enter your Details</Text>
+        {/* allergiesallergies */}
         <View style={styles.rowFlex}>
           <View style={styles.SectionStyle}>
             <TextInput
@@ -76,49 +104,7 @@ const DetailScreen = ({navigation}) => {
                 styles.inputStyle,
                 userNameError ? styles.inputStyleError : '',
               ]}
-              onChangeText={UserName => setUserName(UserName)}
-              placeholder="User Name"
-              placeholderTextColor={COLORS.white}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                passwordInputRef.current && passwordInputRef.current.focus()
-              }
-              underlineColorAndroid="#f000"
-              blurOnSubmit={false}
-            />
-          </View>
-        </View>
-        <View style={styles.rowFlex}>
-          <View style={styles.SectionStyle}>
-            <TextInput
-              style={[
-                styles.inputStyle,
-                userNameError ? styles.inputStyleError : '',
-              ]}
-              onChangeText={UserEmail => setUserEmail(UserEmail)}
-              placeholder="Email"
-              placeholderTextColor={COLORS.white}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                passwordInputRef.current && passwordInputRef.current.focus()
-              }
-              underlineColorAndroid="#f000"
-              blurOnSubmit={false}
-            />
-          </View>
-        </View>
-        <View style={styles.rowFlex}>
-          <View style={styles.SectionStyle}>
-            <TextInput
-              style={[
-                styles.inputStyle,
-                userNameError ? styles.inputStyleError : '',
-              ]}
-              onChangeText={UserName => setUserName(UserName)}
+              onChangeText={UserName => setAge(UserName)}
               placeholder="Age"
               placeholderTextColor={COLORS.white}
               autoCapitalize="none"
@@ -139,7 +125,7 @@ const DetailScreen = ({navigation}) => {
                 styles.inputStyle,
                 userNameError ? styles.inputStyleError : '',
               ]}
-              onChangeText={UserName => setUserName(UserName)}
+              onChangeText={UserName => setHeight(UserName)}
               placeholder="Height"
               placeholderTextColor={COLORS.white}
               autoCapitalize="none"
@@ -160,7 +146,7 @@ const DetailScreen = ({navigation}) => {
                 styles.inputStyle,
                 userNameError ? styles.inputStyleError : '',
               ]}
-              onChangeText={UserName => setUserName(UserName)}
+              onChangeText={UserName => setWeight(UserName)}
               placeholder="Weight"
               placeholderTextColor={COLORS.white}
               autoCapitalize="none"
@@ -181,7 +167,7 @@ const DetailScreen = ({navigation}) => {
                 styles.inputStyle,
                 userNameError ? styles.inputStyleError : '',
               ]}
-              onChangeText={UserName => setUserName(UserName)}
+              onChangeText={UserName => setGender(UserName)}
               placeholder="Gender"
               placeholderTextColor={COLORS.white}
               autoCapitalize="none"
@@ -196,27 +182,42 @@ const DetailScreen = ({navigation}) => {
           </View>
         </View>
         <View style={styles.rowFlex}>
-          <View style={styles.SectionStyle}>
-            <TextInput
-              style={[
-                styles.inputStyle,
-                userNameError ? styles.inputStyleError : '',
-              ]}
-              onChangeText={UserName => setUserName(UserName)}
-              placeholder="Gender"
-              placeholderTextColor={COLORS.white}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                passwordInputRef.current && passwordInputRef.current.focus()
-              }
-              underlineColorAndroid="#f000"
-              blurOnSubmit={false}
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              disabled={false}
+              value={toggleFamily}
+              onValueChange={newValue => setToggleCheckBox(newValue)}
             />
+            <Text style={styles.label}>Family History</Text>
           </View>
         </View>
         <View style={styles.rowFlex}>
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              disabled={false}
+              value={drugAl}
+              style={{
+                color:'white'
+              }}
+              onValueChange={newValue => setToggleDrug(newValue)}
+            />
+            <Text style={styles.label}>Drug Allergy</Text>
+          </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              disabled={false}
+              value={allergies}
+              style={{
+                color:'white'
+              }}
+              onValueChange={newValue => setAllergies(newValue)}
+            />
+            <Text style={styles.label}>Allergies</Text>
+          </View>
+        </View>
+        {/* <View style={styles.rowFlex}>
           <View style={styles.SectionStyle}>
             <TextInput
               style={[
@@ -236,7 +237,7 @@ const DetailScreen = ({navigation}) => {
               blurOnSubmit={false}
             />
           </View>
-        </View>
+        </View> */}
         <View style={styles.centerFlex}>
           <TouchableOpacity
             style={styles.buttonStyle}
@@ -329,10 +330,12 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   title: {
-    color: COLORS.white,
+    color: COLORS.black,
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 25,
+    marginTop: 30,
+    marginBottom: 15,
+    fontSize: 22,
   },
   mainBody: {
     // backgroundColor: '#FAFAFA',
@@ -393,5 +396,16 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     fontSize: 14,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    width: SIZES.width * 0.7,
+    justifyContent: 'space-between',
+  },
+  label: {
+    margin: 8,
+    color: 'white',
+    padding: 5,
   },
 });
