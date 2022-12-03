@@ -9,17 +9,10 @@ import {
 import axios from 'axios';
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import LinearGradient from 'react-native-linear-gradient';
-export default function OnBoard({navigation}) {
-  const [respo, setRespo] = useState({
-    predicted_allergy: 'Allium Allergy',
-    predicted_food_type: 'Vegetable',
-    possible_allergens: ['Beans'],
-    references: [
-      {
-        url: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6409889/#:~:text=Onion%20(Allium%20cepa)%20handling%20can,allergic%20reactions%20to%20onion%20consumption.',
-      },
-    ],
-  });
+export default function OnBoard({route, navigation}) {
+  const {resp} = route.params;
+  console.log('🚀 ~ file: AlleResult.js:14 ~ OnBoard ~ resp', resp);
+  const [respo, setRespo] = useState(resp);
   const foodsToSend = {
     amount_taken: 'Large Amount',
     symptoms_list: [
@@ -59,7 +52,7 @@ export default function OnBoard({navigation}) {
         <Text style={styles.title}>
           The Food Type/Item that caused the Food Allergy is/are;
         </Text>
-        <Text style={[styles.titleNew, {marginTop: 20}]}>Food Type:</Text>
+
         <TouchableOpacity disabled style={styles.btn}>
           <Text style={styles.btnText}>{respo.predicted_food_type}</Text>
         </TouchableOpacity>
@@ -67,7 +60,12 @@ export default function OnBoard({navigation}) {
 
         {respo.possible_allergens.map(x => (
           <TouchableOpacity disabled style={styles.btn}>
-            <Text style={styles.btnText}>{x}</Text>
+            {respo.possible_allergens === undefined ||
+            respo.possible_allergens.length == 0 ? (
+              <Text style={styles.btnText}>1{x}</Text>
+            ) : (
+              <Text style={styles.btnText}>-</Text>
+            )}
           </TouchableOpacity>
         ))}
         <Text style={styles.titleNew}>You might be diagnosed with</Text>
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: COLORS.primary,
     height: 40,
-    width: 200,
+    width: '90%',
     borderRadius: 10,
     margin: 10,
     justifyContent: 'center',
@@ -120,7 +118,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: COLORS.white,
-    fontWeight: 'bold',
+    fontWeight: '200',
     fontSize: 20,
   },
   title: {
@@ -131,7 +129,8 @@ const styles = StyleSheet.create({
   },
   titleNew: {
     color: COLORS.black,
-    fontSize: 15,
+    fontSize: 20,
+    fontWeight: '500',
     textAlign: 'center',
     // marginLeft: -120,
     marginTop: 10,
@@ -141,7 +140,7 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.height * 0.05,
     color: COLORS.black,
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 25,
     padding: 10,
     textAlign: 'center',
   },

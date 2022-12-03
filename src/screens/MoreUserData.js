@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 // Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
+// https://aboutreact.com/react-native-updateUser-and-signup/
 
 // Import React and Component
 import React, {useState, createRef} from 'react';
@@ -17,6 +17,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+import {updateUser} from '../api/updateUser';
 import CheckBox from '@react-native-community/checkbox';
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
@@ -63,27 +64,60 @@ const RegisterScreen = ({navigation}) => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
   const onPressSend = () => {
-    const data = {
-      age: 25,
-      sex: sex,
+    navigation.navigate('SuspectFood');
+    const payload = {
+      age: age,
+      sex: 'male',
       allergies: foodAlg,
       family_history: famFood,
       drug_allergies: drug,
     };
-    axios
-      .post('http://127.0.0.1:8000/api/v1.0/user/', data, {
-        headers: {
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
-        },
-      })
-      .then(res => {
-        console.log(res.data);
+    var bodyFormData = new FormData();
+    bodyFormData.append('age', age);
+    bodyFormData.append('sex', 'male');
+    bodyFormData.append('allergies', foodAlg);
+    bodyFormData.append('family_history', famFood);
+    bodyFormData.append('drug_allergies', drug);
+
+    console.log(
+      '🚀 ~ file: MoreUserData.js:73 ~ onPressSend ~ data',
+      bodyFormData,
+    );
+    updateUser(bodyFormData)
+      .then(response => {
+        if (response.error) {
+          console.log('error__<', response.error);
+          showToast('try again');
+          return;
+        }
+        const {data} = response;
+        console.log('res', response.data);
+
         navigation.navigate('SuspectFood');
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log('error-->', error);
         navigation.navigate('SuspectFood');
+
+        // showToast(error.responses);
+      })
+      .finally(() => {
+        setLoading(false);
       });
+    // axios
+    //   .post('http://127.0.0.1:8000/api/v1.0/user/', data, {
+    //     headers: {
+    //       Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
+    //     },
+    //   })
+    //   .then(res => {
+    //     console.log(res.data);
+    //     navigation.navigate('SuspectFood');
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     navigation.navigate('SuspectFood');
+    //   });
   };
   return (
     <ImageBackground

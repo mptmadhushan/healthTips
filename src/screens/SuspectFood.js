@@ -3,7 +3,7 @@
 // https://aboutreact.com/react-native-login-and-signup/
 
 // Import React and Component
-import React, {useState, createRef} from 'react';
+import React, {useState, createRef, useEffect} from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -29,71 +29,48 @@ import CheckboxList from 'rn-checkbox-list';
 import axios from 'axios';
 const RegisterScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
-  const [userName, setUserName] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const [age, setAge] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
-  const [gender, setGender] = useState('');
-  const [job, setJob] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errortext, setErrortext] = useState('');
+  const [amountTaken, setAmount] = useState('large amount');
+  const [mealArray, setMealArray] = useState([]);
+  const [mealIds, setMealIds] = useState([]);
+
   const [userNameError, setUserNameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
 
   const passwordInputRef = createRef();
   const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
   const yesno = ['yes', 'no'];
   const yesnom = ['yes', 'no', 'I’m not Aware'];
   const data = [
-    {id: 1, name: 'Milk'},
-    {id: 2, name: 'Eggs'},
-    {id: 3, name: 'Wheat'},
-    {id: 4, name: 'Fish'},
-    {id: 5, name: 'Corn'},
-    {id: 6, name: 'Raw Vegetables'},
+    {id: 10, name: 'Milk'},
+    {id: 11, name: 'Dairy'},
+    {id: 1, name: 'Fruit'},
+    {id: 2, name: 'Citrus Fruit'},
+    {id: 3, name: 'Beans'},
+    {id: 4, name: 'Eggs'},
+    {id: 5, name: 'Wheat'},
+    {id: 6, name: 'Fish'},
+    {id: 7, name: 'Corn'},
+    {id: 8, name: 'Raw Vegetables'},
   ];
-  const foodsToSend = {
-    amount_taken: 'Large Amount',
-    symptoms_list: [
-      'Hives or a rash anywhere on the body',
-      'Tingling or itching in the mouth',
-      'Stomach pains',
-      'Cramping',
-      'Gas',
-      'Dizziness or lightheadedness',
-    ],
-    food_list: ['Dairy', 'Fruit', 'Citrus Fruit', 'Beans'],
-  };
+
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
 
-  const onPressReg = () => {
-    const data = {
-      amount_taken: '',
-      symptoms_list: [],
-    
-      food_list: [],
-     
-    };
-    axios
-      .post('http://127.0.0.1:8000/api/v1.0/allergy/', foodsToSend, {
-        headers: {
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
-        },
-      })
-      .then(res => {
-        console.log(res.data);
-        navigation.navigate('Symptoms');
-      })
-      .catch(err => {
-        console.log(err);
-        navigation.navigate('Symptoms');
-      });
+  const onPressNext = () => {
+    const arr2 = mealIds;
+    const response = data.filter(item => arr2.includes(item.id));
+    const newArr = response.map(obj => obj.name);
+    console.log('🚀🗃  ~', newArr);
+    setMealArray(newArr);
+    navigation.navigate('Symptoms', {
+      food_list: newArr,
+      amount_taken: amountTaken,
+    });
   };
+  useEffect(() => {
+    // setMealArray({});
+  }, [mealArray]);
+
   return (
     <ImageBackground
       style={styles.mainBody}
@@ -142,7 +119,11 @@ const RegisterScreen = ({navigation}) => {
           <CheckboxList
             theme="green"
             listItems={data}
-            onChange={({ids, items}) => console.log('My updated list :: ', ids)}
+            onChange={({ids}) =>
+              // console.log('My updated list :: ', ids, selectedListItems)
+              // onMealChange(ids)
+              setMealIds(ids)
+            }
             listItemStyle={{
               borderBottomColor: '#fff',
               borderBottomWidth: 1,
@@ -159,7 +140,7 @@ const RegisterScreen = ({navigation}) => {
                 styles.inputStyle,
                 userNameError ? styles.inputStyleError : '',
               ]}
-              onChangeText={UserName => setUserName(UserName)}
+              onChangeText={text => setAmount(text)}
               placeholder="Amount Taken"
               placeholderTextColor={COLORS.black}
               autoCapitalize="none"
@@ -176,7 +157,7 @@ const RegisterScreen = ({navigation}) => {
                 styles.inputStyle,
                 userNameError ? styles.inputStyleError : '',
               ]}
-              onChangeText={UserName => setUserName(UserName)}
+              onChangeText={amoutTaken => setAmount(amoutTaken)}
               placeholder="Food item 1"
               placeholderTextColor={COLORS.black}
               autoCapitalize="none"
@@ -193,7 +174,7 @@ const RegisterScreen = ({navigation}) => {
                 styles.inputStyle,
                 userNameError ? styles.inputStyleError : '',
               ]}
-              onChangeText={UserName => setUserName(UserName)}
+              onChangeText={amoutTaken => setAmount(amoutTaken)}
               placeholder="Food item 2"
               placeholderTextColor={COLORS.black}
               autoCapitalize="none"
@@ -210,7 +191,7 @@ const RegisterScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
-              onPress={() => onPressReg()}>
+              onPress={() => onPressNext()}>
               <Text style={styles.buttonTextStye}>Next</Text>
             </TouchableOpacity>
           </View>

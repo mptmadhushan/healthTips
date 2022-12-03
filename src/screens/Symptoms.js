@@ -21,13 +21,13 @@ import {
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import APIKit, {setClientToken} from '../helpers/apiKit';
-import {authRegAPI} from '../api/detailsApi';
+import {addAllergy} from '../api/addAllergy';
 
 import CheckboxList from 'rn-checkbox-list';
 
 // import DatePicker from 'react-native-date-picker';
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = ({route, navigation}) => {
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -46,43 +46,60 @@ const RegisterScreen = ({navigation}) => {
   const passwordInputRef = createRef();
   const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
   const yesno = ['yes', 'no'];
-  const yesnom = ['yes', 'no', 'I’m not Aware'];
+  const [sympIds, setSympIds] = useState([]);
+  const [symp, setSymp] = useState([]);
+
   const data = [
-    {id: 1, name: 'Itchy mouth'},
-    {id: 2, name: 'Funny taste in your mouth'},
+    {id: 1, name: 'Hives or a rash anywhere on the body'},
+    {id: 2, name: 'Dizziness or lightheadedness'},
     {id: 3, name: 'uneven heartbeat'},
-    {id: 4, name: 'diarrhea'},
-    {id: 5, name: 'swallowing'},
-    {id: 6, name: 'Swollen lips'},
-    {id: 7, name: 'Swollen tongue, or throat'},
-    {id: 8, name: 'stomach pains'},
-    {id: 8, name: 'Cramping'},
-    {id: 8, name: 'Gas'},
+    {id: 4, name: 'Cramping'},
+    {
+      id: 6,
+      name: 'Tingling or itching in the mouthTingling or itching in the mouth',
+    },
+    {id: 7, name: 'Stomach pains'},
+    {id: 8, name: 'Swollen lips'},
+    {id: 9, name: 'Swollen tongue, or throat'},
+    {id: 10, name: 'stomach pains'},
+    {id: 11, name: 'Cramping'},
+    {id: 12, name: 'Gas'},
+    {id: 13, name: 'Dizziness or lightheadedness'},
   ];
+  const {food_list, amount_taken} = route.params;
+  console.log(
+    '🚀 ~ file: Symptoms.js:63 ~ RegisterScreen ~ itemId, otherParam',
+    food_list,
+    amount_taken,
+  );
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
-  const onPressReg = () => {
-    navigation.navigate('BMI');
-    const payload = {
-      username: userName,
-      email: userEmail,
-      password: userPassword,
-      roles: ['user'],
-    };
 
-    setLoading(true);
-    console.log(payload);
-    authRegAPI(payload)
+  const onPressNext = () => {
+    const arr2 = sympIds;
+    const resp = data.filter(item => arr2.includes(item.id));
+    const newArr = resp.map(obj => obj.name);
+    console.log('🚀🗃 ', newArr);
+
+    var bodyFormData = new FormData();
+    bodyFormData.append('amount_taken', amount_taken);
+    bodyFormData.append('symptoms_list', JSON.stringify(newArr));
+    bodyFormData.append('food_list', JSON.stringify(food_list));
+
+    console.log('🚀 ~ file: Symptoms.js:87= payload', bodyFormData);
+    addAllergy(bodyFormData)
       .then(response => {
         if (response.error) {
           console.log('error__<', response.error);
           showToast('try again');
           return;
         }
-        const {data} = response;
-        console.log('res', response.data);
-        console.log('token', data.access);
+        const respo = response.data;
+        console.log('res', respo);
+        navigation.navigate('AlleResult', {
+          resp: respo,
+        });
       })
       .catch(error => {
         console.log('error-->', error);
@@ -111,33 +128,11 @@ const RegisterScreen = ({navigation}) => {
               Let’s Track your Symptoms
             </Text>
           </View>
-          <View>
-            {/* <View style={styles.centerFlex}>
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={() => setOpen(true)}>
-                <Text style={styles.buttonTextStye}>Pick a date</Text>
-              </TouchableOpacity>
-            </View> */}
 
-            {/* <DatePicker
-              modal
-              open={open}
-              date={date}
-              onConfirm={date => {
-                setOpen(false);
-                setDate(date);
-              }}
-              onCancel={() => {
-                setOpen(false);
-              }}
-            /> */}
-          </View>
           <CheckboxList
             theme="green"
             listItems={data}
-            onChange={({ids, items}) => console.log('My updated list :: ', ids)}
+            onChange={({ids, items}) => setSympIds(ids)}
             listItemStyle={{
               borderBottomColor: '#fff',
               borderBottomWidth: 1,
@@ -151,7 +146,7 @@ const RegisterScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
-              onPress={() => navigation.navigate('AlleResult')}>
+              onPress={() => onPressNext()}>
               <Text style={styles.buttonTextStye}>Next</Text>
             </TouchableOpacity>
           </View>

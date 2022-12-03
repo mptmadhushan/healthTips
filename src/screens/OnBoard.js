@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -14,7 +14,31 @@ import sec1 from '../assets/sec1.jpg';
 import sec2 from '../assets/sec2.jpg';
 import sec3 from '../assets/sec3.jpg';
 import sec4 from '../assets/sec4.jpg';
+import axios from 'axios';
+import {storeUserToken, getUserToken} from '../shared/asyncStorage';
+import {setClientToken} from '../shared/axios';
+import {getUser} from '../api/getUser.js';
 export default function OnBoard({navigation}) {
+  useEffect(() => {
+    setClientToken('token');
+    getUser()
+      .then(response => {
+        if (response.error) {
+          console.log('error__<', response.error);
+          return;
+        }
+        const {data} = response;
+        console.log('res', response.data);
+        console.log('token', data.accessToken);
+
+        // navigation.navigate('Home');
+      })
+      .catch(error => {
+        console.log('error-->', error);
+        // showToast(error.responses);
+      })
+      .finally(() => {});
+  }, []);
   return (
     <ImageBackground
       style={styles.container}

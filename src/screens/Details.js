@@ -3,7 +3,7 @@
 // https://aboutreact.com/react-native-login-and-signup/
 
 // Import React and Component
-import React, {useState, createRef} from 'react';
+import React, {useState, createRef, useEffect} from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -18,14 +18,14 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {detailsApi} from '../api/detailsApi';
-
+import axios from 'axios';
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import CheckBox from '@react-native-community/checkbox';
 const DetailScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  const [bmi, setBMI] = useState('');
   const [gender, setGender] = useState('');
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
@@ -36,10 +36,12 @@ const DetailScreen = ({navigation}) => {
   const [userNameError, setUserNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [drugAl, setToggleDrug] = useState(false);
-  const [allergies,setAllergies] = useState(false);
+  const [allergies, setAllergies] = useState(false);
   const [toggleFamily, setToggleCheckBox] = useState(false);
 
   const passwordInputRef = createRef();
+  useEffect(() => {}, [bmi]);
+
   const data = [
     'Teacher',
     'Nurse',
@@ -51,36 +53,58 @@ const DetailScreen = ({navigation}) => {
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
- 
-  const onPressReg = () => {
+
+  const onNext = () => {
     const payload = {
-      age: age,
-      sex: gender,
-      allergies: allergies,
-      family_history: toggleFamily,
-      drug_allergies: drugAl,
+      Height: '2.70',
+      Weight: '60',
+      IsMale: 'True',
+      Age: '25',
     };
 
     setLoading(true);
     console.log(payload);
-    detailsApi(payload)
-      .then(response => {
-        if (response.error) {
-          console.log('error__<', response.error);
-          showToast('try again');
-          return;
-        }
-        const {data} = response;
-        console.log('res', response.data);
-        console.log('token', data.access);
-        navigation.navigate('Login');
+    axios
+      .post(
+        'http://ec2-54-242-87-59.compute-1.amazonaws.com:4900/predict',
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
+          },
+        },
+      )
+      .then(res => {
+        console.log(res.data);
+        navigation.navigate('Meal');
       })
-      .catch(error => {
-        console.log('error-->', error);
-      })
-      .finally(() => {
-        setLoading(false);
+      .catch(err => {
+        console.log(err);
       });
+    // detailsApi(payload)
+    //   .then(response => {
+    //     if (response.error) {
+    //       console.log('error__<', response.error);
+    //       showToast('try again');
+    //       return;
+    //     }
+    //     const {data} = response;
+    //     console.log('res', response.data);
+    //     console.log('token', data.access);
+    //     navigation.navigate('Login');
+    //   })
+    //   .catch(error => {
+    //     console.log('error-->', error);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+  };
+  const getBMI = () => {
+    let bmiRes = weight / (height * height);
+    console.log('🚀 ~ file: Details.js:87 ~ getBMI ~ bmi', bmiRes);
+    setBMI(bmiRes);
+    return bmiRes;
   };
   return (
     <ImageBackground
@@ -126,7 +150,7 @@ const DetailScreen = ({navigation}) => {
                 userNameError ? styles.inputStyleError : '',
               ]}
               onChangeText={UserName => setHeight(UserName)}
-              placeholder="Height"
+              placeholder="height in m2"
               placeholderTextColor={COLORS.white}
               autoCapitalize="none"
               keyboardType="email-address"
@@ -147,7 +171,7 @@ const DetailScreen = ({navigation}) => {
                 userNameError ? styles.inputStyleError : '',
               ]}
               onChangeText={UserName => setWeight(UserName)}
-              placeholder="Weight"
+              placeholder="Weight in kg"
               placeholderTextColor={COLORS.white}
               autoCapitalize="none"
               keyboardType="email-address"
@@ -184,7 +208,7 @@ const DetailScreen = ({navigation}) => {
         <View style={styles.rowFlex}>
           <View style={styles.checkboxContainer}>
             <CheckBox
-            // tintColors={{'white' }}
+              // tintColors={{'white' }}
               disabled={false}
               value={toggleFamily}
               onValueChange={newValue => setToggleCheckBox(newValue)}
@@ -198,7 +222,7 @@ const DetailScreen = ({navigation}) => {
               disabled={false}
               value={drugAl}
               style={{
-                color:'white'
+                color: 'white',
               }}
               onValueChange={newValue => setToggleDrug(newValue)}
             />
@@ -211,7 +235,7 @@ const DetailScreen = ({navigation}) => {
               disabled={false}
               value={allergies}
               style={{
-                color:'white'
+                color: 'white',
               }}
               onValueChange={newValue => setAllergies(newValue)}
             />
@@ -243,7 +267,7 @@ const DetailScreen = ({navigation}) => {
           <TouchableOpacity
             style={styles.buttonStyle}
             activeOpacity={0.5}
-            onPress={() => onPressReg()}>
+            onPress={() => getBMI()}>
             <Text style={styles.buttonTextStyle}>Done</Text>
           </TouchableOpacity>
         </View>
@@ -261,6 +285,8 @@ const DetailScreen = ({navigation}) => {
               autoCapitalize="none"
               keyboardType="email-address"
               disabled
+              value={bmi}
+              defaultValue={bmi}
               returnKeyType="next"
               onSubmitEditing={() =>
                 passwordInputRef.current && passwordInputRef.current.focus()
@@ -270,7 +296,7 @@ const DetailScreen = ({navigation}) => {
             />
           </View>
         </View>
-        <View style={styles.rowFlex}>
+        {/* <View style={styles.rowFlex}>
           <View style={styles.SectionStyle}>
             <TextInput
               style={[
@@ -291,12 +317,12 @@ const DetailScreen = ({navigation}) => {
               blurOnSubmit={false}
             />
           </View>
-        </View>
+        </View> */}
         <View style={styles.centerFlex}>
           <TouchableOpacity
             style={styles.buttonStyle}
             activeOpacity={0.5}
-            onPress={() => navigation.navigate('Meal')}>
+            onPress={() => onNext()}>
             <Text style={styles.buttonTextStyle}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -400,7 +426,7 @@ const styles = StyleSheet.create({
   },
   checkboxContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
+    // marginBottom: 10,
     width: SIZES.width * 0.7,
     justifyContent: 'space-between',
   },
