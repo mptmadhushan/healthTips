@@ -56,10 +56,10 @@ const DetailScreen = ({navigation}) => {
 
   const onNext = () => {
     const payload = {
-      Height: '2.70',
-      Weight: '60',
+      Height: height,
+      Weight: weight,
       IsMale: 'True',
-      Age: '25',
+      Age: age,
     };
 
     setLoading(true);
