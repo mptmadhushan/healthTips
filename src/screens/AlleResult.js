@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Linking,
   ImageBackground,
 } from 'react-native';
 import axios from 'axios';
@@ -54,24 +55,33 @@ export default function OnBoard({route, navigation}) {
         </Text>
 
         <TouchableOpacity disabled style={styles.btn}>
-          <Text style={styles.btnText}>{respo.predicted_food_type}</Text>
+          <Text style={styles.btnText}>{resp.predicted_food_type}</Text>
         </TouchableOpacity>
-        <Text style={styles.titleNew}>Possible Allergens</Text>
+        {resp.possible_allergens.length > 0 && (
+          <Text style={styles.titleNew}>Possible Allergens</Text>
+        )}
 
-        {respo.possible_allergens.map(x => (
+        {resp.possible_allergens.map(x => (
           <TouchableOpacity disabled style={styles.btn}>
-            {respo.possible_allergens === undefined ||
-            respo.possible_allergens.length == 0 ? (
-              <Text style={styles.btnText}>1{x}</Text>
-            ) : (
-              <Text style={styles.btnText}>-</Text>
-            )}
+            <Text style={styles.btnText}>{x}</Text>
+          </TouchableOpacity>
+        ))}
+        {resp.references.length > 0 && (
+          <Text style={styles.titleNew}>References</Text>
+        )}
+        {resp.references.map(x => (
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => {
+              Linking.openURL(x.url);
+            }}>
+            <Text style={styles.btnText}>{x.url.substring(0, 30)}...</Text>
           </TouchableOpacity>
         ))}
         <Text style={styles.titleNew}>You might be diagnosed with</Text>
 
         <TouchableOpacity disabled style={styles.btn}>
-          <Text style={styles.btnText}>{respo.predicted_allergy}</Text>
+          <Text style={styles.btnText}>{resp.predicted_allergy}</Text>
         </TouchableOpacity>
         <Text style={[styles.title, {marginTop: 20}]}>
           Try eliminating the above food type item from your meal plan for 2

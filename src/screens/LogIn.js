@@ -87,7 +87,7 @@ const LoginScreen = ({navigation}) => {
   return (
     <ImageBackground
       style={styles.mainBody}
-      source={require('../assets/backlg.png')}>
+      source={require('../assets/backlg.jpeg')}>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{

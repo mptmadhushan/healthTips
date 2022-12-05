@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import LinearGradient from 'react-native-linear-gradient';
-export default function OnBoard({navigation}) {
+export default function OnBoard({navigation, route}) {
+  const {resp} = route.params;
   const [respo, setRespo] = useState({
     Diabetes: '77 %',
     Cholesterol: '28 %',
@@ -19,14 +20,14 @@ export default function OnBoard({navigation}) {
       style={styles.container}
       source={require('../assets/images/arBg.jpeg')}>
       <LinearGradient colors={['transparent', 'white']} style={styles.overlay}>
-        <Text style={styles.title2}>your meal plan is{'\n'} an unhealthy</Text>
-        <Text style={styles.title}> {respo.Healthyness}</Text>
+        <Text style={styles.title2}>Your meal plan{'\n'} is an unhealthy</Text>
+        {/* <Text style={styles.title}> {resp.Cholesterol}</Text> */}
 
         <TouchableOpacity disabled style={styles.btn}>
-          <Text style={styles.btnText}>Cholesterol :{respo.Cholesterol}</Text>
+          <Text style={styles.btnText}>Cholesterol :{resp.Cholesterol}</Text>
         </TouchableOpacity>
         <TouchableOpacity disabled style={styles.btn}>
-          <Text style={styles.btnText}>Diabetes :{respo.Diabetes}</Text>
+          <Text style={styles.btnText}>Diabetes :{resp.Diabetes}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -77,7 +78,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title2: {
-    marginTop: SIZES.height * 0.3,
+    marginTop: SIZES.height * 0.2,
+    marginBottom: SIZES.height * 0.1,
     color: COLORS.black,
     fontWeight: 'bold',
     fontSize: 30,

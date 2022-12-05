@@ -22,10 +22,12 @@ import axios from 'axios';
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import CheckBox from '@react-native-community/checkbox';
+import AsyncStorage from '@react-native-community/async-storage';
+
 const DetailScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
-  const [bmi, setBMI] = useState('');
+  const [bmi, setBMI] = useState('-');
   const [gender, setGender] = useState('');
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
@@ -64,23 +66,25 @@ const DetailScreen = ({navigation}) => {
 
     setLoading(true);
     console.log(payload);
-    axios
-      .post(
-        'http://ec2-54-242-87-59.compute-1.amazonaws.com:4900/predict',
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
-          },
-        },
-      )
-      .then(res => {
-        console.log(res.data);
-        navigation.navigate('Meal');
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    navigation.navigate('Meal');
+    // axios
+    //   .post(
+    //     'http://ec2-54-242-87-59.compute-1.amazonaws.com:4900/predict',
+    //     payload,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
+    //       },
+    //     },
+    //   )
+    //   .then(res => {
+    //     console.log(res.data);
+    //     navigation.navigate('Meal');
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     navigation.navigate('Meal');
+    //   });
     // detailsApi(payload)
     //   .then(response => {
     //     if (response.error) {
@@ -104,7 +108,30 @@ const DetailScreen = ({navigation}) => {
     let bmiRes = weight / (height * height);
     console.log('🚀 ~ file: Details.js:87 ~ getBMI ~ bmi', bmiRes);
     setBMI(bmiRes);
+    storeUserDetails();
+
     return bmiRes;
+  };
+  const storeUserDetails = async () => {
+    try {
+      const userData = {
+        Age: age,
+        Height: height,
+        Weight: weight,
+        isMale: 'True',
+      };
+      const jsonData = JSON.stringify(userData);
+      // const exisData = userMeal;
+      // const updatedData = [...exisData, jsonData];
+      // console.log('🚀 ~ updatedData', jsonData);
+
+      // const arr = [];
+      // const newDat = arr.push(jsonData);
+      // console.log('🚀 ~ updatedData', newDat);
+      await AsyncStorage.setItem('@user_data', jsonData);
+    } catch (e) {
+      console.log('Error!!!!! (Handle me properly) -> ', e);
+    }
   };
   return (
     <ImageBackground
@@ -130,7 +157,7 @@ const DetailScreen = ({navigation}) => {
               ]}
               onChangeText={UserName => setAge(UserName)}
               placeholder="Age"
-              placeholderTextColor={COLORS.white}
+              placeholderTextColor="#fff"
               autoCapitalize="none"
               keyboardType="email-address"
               returnKeyType="next"
@@ -205,64 +232,7 @@ const DetailScreen = ({navigation}) => {
             />
           </View>
         </View>
-        <View style={styles.rowFlex}>
-          <View style={styles.checkboxContainer}>
-            <CheckBox
-              // tintColors={{'white' }}
-              disabled={false}
-              value={toggleFamily}
-              onValueChange={newValue => setToggleCheckBox(newValue)}
-            />
-            <Text style={styles.label}>Family History</Text>
-          </View>
-        </View>
-        <View style={styles.rowFlex}>
-          <View style={styles.checkboxContainer}>
-            <CheckBox
-              disabled={false}
-              value={drugAl}
-              style={{
-                color: 'white',
-              }}
-              onValueChange={newValue => setToggleDrug(newValue)}
-            />
-            <Text style={styles.label}>Drug Allergy</Text>
-          </View>
-        </View>
-        <View style={styles.rowFlex}>
-          <View style={styles.checkboxContainer}>
-            <CheckBox
-              disabled={false}
-              value={allergies}
-              style={{
-                color: 'white',
-              }}
-              onValueChange={newValue => setAllergies(newValue)}
-            />
-            <Text style={styles.label}>Allergies</Text>
-          </View>
-        </View>
-        {/* <View style={styles.rowFlex}>
-          <View style={styles.SectionStyle}>
-            <TextInput
-              style={[
-                styles.inputStyle,
-                userNameError ? styles.inputStyleError : '',
-              ]}
-              onChangeText={UserName => setUserName(UserName)}
-              placeholder="Jobs"
-              placeholderTextColor={COLORS.white}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                passwordInputRef.current && passwordInputRef.current.focus()
-              }
-              underlineColorAndroid="#f000"
-              blurOnSubmit={false}
-            />
-          </View>
-        </View> */}
+
         <View style={styles.centerFlex}>
           <TouchableOpacity
             style={styles.buttonStyle}
@@ -272,52 +242,14 @@ const DetailScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <View style={{marginTop: 35}} />
-        <View style={styles.rowFlex}>
-          <View style={styles.SectionStyle}>
-            <TextInput
-              style={[
-                styles.inputStyle,
-                userNameError ? styles.inputStyleError : '',
-              ]}
-              onChangeText={UserName => setUserName(UserName)}
-              placeholder="Your BMI Value"
-              placeholderTextColor={COLORS.white}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              disabled
-              value={bmi}
-              defaultValue={bmi}
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                passwordInputRef.current && passwordInputRef.current.focus()
-              }
-              underlineColorAndroid="#f000"
-              blurOnSubmit={false}
-            />
-          </View>
+        <View style={styles.centerFlex}>
+          {/* <View style={styles.SectionStyle}> */}
+          <Text style={[{marginBottom: 20}, styles.buttonTextStyle]}>
+            Your BMI is {bmi}
+          </Text>
+          {/* </View> */}
         </View>
-        {/* <View style={styles.rowFlex}>
-          <View style={styles.SectionStyle}>
-            <TextInput
-              style={[
-                styles.inputStyle,
-                userNameError ? styles.inputStyleError : '',
-              ]}
-              disabled
-              onChangeText={UserName => setUserName(UserName)}
-              placeholder="Your daily needs"
-              placeholderTextColor={COLORS.white}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                passwordInputRef.current && passwordInputRef.current.focus()
-              }
-              underlineColorAndroid="#f000"
-              blurOnSubmit={false}
-            />
-          </View>
-        </View> */}
+
         <View style={styles.centerFlex}>
           <TouchableOpacity
             style={styles.buttonStyle}
@@ -348,6 +280,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginLeft: SIZES.width * 0.3,
   },
+
   rowFlex: {
     flexDirection: 'row',
     // flex: 1,
@@ -396,7 +329,7 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     flex: 1,
-    color: COLORS.third,
+    color: COLORS.white,
     paddingLeft: 15,
     paddingRight: 15,
     width: SIZES.width * 0.7,

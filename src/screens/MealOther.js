@@ -18,34 +18,81 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
+
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 
-const DetailScreen = ({navigation}) => {
-  const [userEmail, setUserEmail] = useState('');
-  const [userName, setUserName] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const [userPasswordConf, setUserPasswordConf] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errortext, setErrortext] = useState('');
+const DetailScreen = ({navigation, route}) => {
+  const [meal1, setMeal1] = useState('');
+  const [grams1, setGrams1] = useState('');
+  const [meal2, setMeal2] = useState('');
+  const [grams2, setGrams2] = useState('');
+  const [meal3, setMeal3] = useState('');
+  const [grams3, setGrams3] = useState('');
+
   const [userNameError, setUserNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
   const passwordInputRef = createRef();
-
+  const countries = [
+    'White rice - long-grain',
+    'Dhal',
+    'Potato',
+    'Beans',
+    'Chicken',
+    'Tomato',
+    'Pumpkin',
+    'pork',
+    'Cucumber',
+    'Cabbage',
+    'Egg (large)',
+    'Chicken bacon',
+    'Carrot',
+    'Leeks',
+    'Chickpeas',
+    'Leeks',
+    'Red grapes',
+    'Dried dates',
+    'Chocalate fudge',
+    'Carrot juice without sugar',
+    'Hoppers',
+    'Strawberry ice cream',
+    'Fruit cake',
+    'Beetroot',
+    'shrimp',
+    'Baked beets',
+    'Steamed carrots',
+    'Pinaple',
+    'Woodapple',
+    'pasta',
+    'Cream Cheese',
+    'spaghetti',
+    'String hoppers',
+    'Banana',
+    'corn',
+  ];
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
-  const onPressReg = () => {
-    // const payload = {
-    //   username: userName,
-    //   email: userEmail,
-    //   password: userPassword,
-    //   roles: ['user'],
-    // };
+  const {resp} = route.params;
+  console.log('🚀 ~ file: MealLunch.js:42 ~ DetailScreen ~ mealData', resp);
+
+  const saveBreakFast = () => {
+    const payload = {
+      Other: {
+        Woodapple: grams1,
+        Apple: grams2,
+        Coffee: grams3,
+      },
+    };
+    const newd = {...resp, ...payload};
+    navigation.navigate('Activity', {
+      resp: newd,
+    });
     // setLoading(true);
-    // console.log(payload);
+    console.log(newd);
   };
   return (
     <ImageBackground
@@ -64,187 +111,149 @@ const DetailScreen = ({navigation}) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Text style={styles.title}>Meal Plan</Text>
-          <View style={styles.rowFlex}>
-            {/* <View style={styles.SectionStyle}>
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={() => onPressReg()}>
-                <Text style={styles.buttonTextStyle}>Breakfast</Text>
-              </TouchableOpacity>
-            </View> */}
-
-            {/* <View style={styles.SectionStyle}>
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={() => navigation.navigate('Meal')}>
-                <Text style={styles.buttonTextStyle}>Lunch</Text>
-              </TouchableOpacity>
-            </View> */}
-          </View>
-          {/* <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={() => onPressReg()}>
-                <Text style={styles.buttonTextStyle}>Dinner</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.SectionStyle}>
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={() => navigation.navigate('Meal')}>
-                <Text style={styles.buttonTextStyle}>Other</Text>
-              </TouchableOpacity>
-            </View>
-          </View> */}
-          <Text style={styles.title2}>EnterYour Other Meals</Text>
 
           <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Enter your meal 1 (g)"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
-          </View>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserEmail => setUserEmail(UserEmail)}
-                placeholder="Enter your meal 2 (g)"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
+            <View style={{margin: 15}}>
+              <Text style={styles.buttonTextStyle}>Other</Text>
             </View>
           </View>
 
           <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Enter your meal 3 (g)"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
-          </View>
-          <Text style={styles.title2}>Enter Your day to day activities</Text>
-
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Enter your activity 1"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+            <SelectDropdown
+              data={countries}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              buttonStyle={styles.inputStyle}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return selectedItem;
+              }}
+              buttonTextStyle={{
+                color: '#fff',
+              }}
+              rowTextForSelection={(item, index) => {
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return item;
+              }}
+            />
           </View>
           <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Enter your activity 2"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+            {/* <View style={styles.SectionStyle}> */}
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={val => setGrams1(val)}
+              placeholder="Enter grams(1)"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="numeric"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
+            {/* </View> */}
           </View>
           <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={UserName => setUserName(UserName)}
-                placeholder="Enter your activity 3"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+            <SelectDropdown
+              data={countries}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              buttonStyle={styles.inputStyle}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return selectedItem;
+              }}
+              buttonTextStyle={{
+                color: '#fff',
+              }}
+              rowTextForSelection={(item, index) => {
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return item;
+              }}
+            />
+          </View>
+          <View style={styles.rowFlex}>
+            {/* <View style={styles.SectionStyle}> */}
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={val => setGrams2(val)}
+              placeholder="Enter grams(2)"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="numeric"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
+            {/* </View> */}
+          </View>
+          <View style={styles.rowFlex}>
+            <SelectDropdown
+              data={countries}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              buttonStyle={styles.inputStyle}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return selectedItem;
+              }}
+              buttonTextStyle={{
+                color: '#fff',
+              }}
+              rowTextForSelection={(item, index) => {
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return item;
+              }}
+            />
+          </View>
+          <View style={styles.rowFlex}>
+            {/* <View style={styles.SectionStyle}> */}
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={val => setGrams3(val)}
+              placeholder="Enter grams(3)"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="numeric"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
+            {/* </View> */}
           </View>
           <View style={styles.centerFlex}>
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
-              onPress={() => onPressReg()}>
-              <Text style={styles.buttonTextStyle}>Other</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('MealResult')}>
-              <Text style={styles.buttonTextStyle}>Done</Text>
+              onPress={() => saveBreakFast()}>
+              {/* onPress={() => navigation.navigate('MealLunch')}> */}
+              <Text style={styles.buttonTextStyle}>Next</Text>
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
@@ -275,22 +284,16 @@ const styles = StyleSheet.create({
     // flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginLeft: SIZES.width * 0.1,
+    // marginLeft: SIZES.width * 0.1,
     alignContent: 'center',
   },
   title: {
     marginTop: -30,
+    marginBottom: 40,
     color: COLORS.white,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 25,
-  },
-  title2: {
-    marginTop: 10,
-    color: COLORS.white,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 15,
   },
   mainBody: {
     // backgroundColor: '#FAFAFA',
@@ -300,11 +303,14 @@ const styles = StyleSheet.create({
   },
   SectionStyle: {
     // backgroundColor: COLORS.secondary,
-    borderRadius: 10,
+    borderRadius: 50,
     borderColor: COLORS.white,
     borderWidth: 1,
+
     height: 40,
-    marginRight: 35,
+    width: SIZES.width * 0.7,
+    paddingRight: 15,
+    // marginRight: 35,
     margin: 10,
   },
   buttonStyle: {
@@ -319,6 +325,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     justifyContent: 'center',
   },
+  buttonStyle22: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+    borderWidth: 0,
+    color: COLORS.white,
+    height: 30,
+    width: 280,
+    alignItems: 'center',
+    borderRadius: 10,
+    marginBottom: 20,
+    justifyContent: 'center',
+  },
   buttonTextStyle: {
     color: '#FFFFFF',
     fontSize: 18,
@@ -326,21 +344,18 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     flex: 1,
-    color: COLORS.third,
-    paddingLeft: 15,
-    paddingRight: 15,
-    width: SIZES.width * 0.7,
-  },
-  inputStyleError: {
-    flex: 1,
-    color: COLORS.third,
-    borderRadius: 30,
+    color: COLORS.white,
+    paddingLeft: 5,
+    backgroundColor: 'transparent',
+    // paddingRight: 15,
+    borderColor: '#fff',
     borderWidth: 1,
-    borderColor: 'red',
-    paddingLeft: 15,
-    paddingRight: 15,
-    width: SIZES.width * 0.7,
+    borderRadius: 60,
+    margin: 10,
+    textAlign: 'center',
+    width: SIZES.width * 0.9,
   },
+
   registerTextStyle: {
     color: '#4c5a5b',
     textAlign: 'center',

@@ -16,7 +16,7 @@ export const setClientToken = token => {
   authRequestInterceptor = APIKit.interceptors.request.use(function (config) {
     config.headers.Authorization =
       // 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcwMzA2NDU3LCJqdGkiOiI3MDhkMDNkOGMyMGM0ODlmOGFkZjk5YmRkYWNiNjE3NCIsInVzZXJfaWQiOjF9.mcmO5Yk3F8vpNwn-n1sR9y_ma_PSQoYXpJ-Hl20b1_g';
-      config.headers.Authorization = `JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcwMzA2NDU3LCJqdGkiOiI3MDhkMDNkOGMyMGM0ODlmOGFkZjk5YmRkYWNiNjE3NCIsInVzZXJfaWQiOjF9.mcmO5Yk3F8vpNwn-n1sR9y_ma_PSQoYXpJ-Hl20b1_g`;
+      config.headers.Authorization = `JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcwNDI3OTUwLCJqdGkiOiI3YjgzMGU4MDQ3MTE0ODIzYjJhNDE1Y2UyOGRmOTkyNyIsInVzZXJfaWQiOjF9.UNiP8KMVMuG9W0YfUgcDa76OIx5NgBbe2Gc3vYQX1gI`;
     return config;
   });
 };
