@@ -24,10 +24,10 @@ export default function OnBoard({navigation, route}) {
         {/* <Text style={styles.title}> {resp.Cholesterol}</Text> */}
 
         <TouchableOpacity disabled style={styles.btn}>
-          <Text style={styles.btnText}>Cholesterol :{resp.Cholesterol}</Text>
+          <Text style={styles.btnText}>Cholesterol :40%{resp.Cholesterol}</Text>
         </TouchableOpacity>
         <TouchableOpacity disabled style={styles.btn}>
-          <Text style={styles.btnText}>Diabetes :{resp.Diabetes}</Text>
+          <Text style={styles.btnText}>Diabetes :50%{resp.Diabetes}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {

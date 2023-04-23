@@ -37,20 +37,14 @@ const DetailScreen = ({navigation, route}) => {
 
   const passwordInputRef = createRef();
   const countries = [
-    'Cleaning the house',
-    'Washing the car',
-    'Biking to work',
+    'Arms',
+    'Chest',
+    'Belly',
     'Computer work',
-    'Sitting in meetings',
-    'Ranking Leaves',
-    'Watching television',
-    'Weight lifting',
-    'Gardening',
-    'Grocery shopping',
-    'Computer work',
-    'Cooking',
-    'Reading',
-    'Sleeping',
+    'Butt',
+    'Thighs',
+    'Back',
+    'Legs',
   ];
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
@@ -82,31 +76,34 @@ const DetailScreen = ({navigation, route}) => {
     // console.log(newd);
   };
   const onNext = () => {
-    const payload = {
-      Height: JSON.parse(userMeal).Height,
-      Weight: JSON.parse(userMeal).Weight,
-      IsMale: 'True',
-      Age: JSON.parse(userMeal).Age,
-      data: data,
-    };
-    console.log('🚀 ~ file: Activity.js:76 ~ onNext ~ payload', payload);
+    navigation.navigate('MealResult', {
+      resp: 'resData',
+    });
+    // const payload = {
+    //   Height: JSON.parse(userMeal).Height,
+    //   Weight: JSON.parse(userMeal).Weight,
+    //   IsMale: 'True',
+    //   Age: JSON.parse(userMeal).Age,
+    //   data: data,
+    // };
+    // console.log('🚀 ~ file: Activity.js:76 ~ onNext ~ payload', payload);
 
-    axios
-      .post(
-        'http://ec2-54-242-87-59.compute-1.amazonaws.com:4900/predict',
-        payload,
-      )
-      .then(res => {
-        console.log(res.data);
-        const resData = res.data;
-        navigation.navigate('MealResult', {
-          resp: resData,
-        });
-      })
-      .catch(err => {
-        console.log(err);
-        navigation.navigate('Meal');
-      });
+    // axios
+    //   .post(
+    //     'http://ec2-54-242-87-59.compute-1.amazonaws.com:4900/predict',
+    //     payload,
+    //   )
+    //   .then(res => {
+    //     console.log(res.data);
+    //     const resData = res.data;
+    //     navigation.navigate('MealResult', {
+    //       resp: resData,
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     navigation.navigate('Meal');
+    //   });
   };
   const storeUserMeal = async value => {
     try {
@@ -154,7 +151,7 @@ const DetailScreen = ({navigation, route}) => {
         }}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Text style={styles.title}>Activity</Text>
+          <Text style={styles.title}>Choose your problem areas</Text>
 
           <View style={styles.rowFlex}>
             <View style={{margin: 15}}>
@@ -185,26 +182,24 @@ const DetailScreen = ({navigation, route}) => {
             />
           </View>
           <View style={styles.rowFlex}>
-            <SelectDropdown
-              data={countries}
-              onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index);
-              }}
-              buttonStyle={styles.inputStyle}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                // text represented after item is selected
-                // if data array is an array of objects then return selectedItem.property to render after item is selected
-                return selectedItem;
-              }}
-              buttonTextStyle={{
-                color: '#fff',
-              }}
-              rowTextForSelection={(item, index) => {
-                // text represented for each item in dropdown
-                // if data array is an array of objects then return item.property to represent item in dropdown
-                return item;
-              }}
+            {/* <View style={styles.SectionStyle}> */}
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={val => setGrams2(val)}
+              placeholder="Time (min)"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
             />
+            {/* </View> */}
           </View>
           <View style={styles.rowFlex}>
             <SelectDropdown
@@ -230,22 +225,64 @@ const DetailScreen = ({navigation, route}) => {
           </View>
           <View style={styles.rowFlex}>
             {/* <View style={styles.SectionStyle}> */}
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={val => setGrams2(val)}
-                placeholder="Water"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={val => setGrams2(val)}
+              placeholder="Time (min)"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
+            {/* </View> */}
+          </View>
+          <View style={styles.rowFlex}>
+            <SelectDropdown
+              data={countries}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              buttonStyle={styles.inputStyle}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return selectedItem;
+              }}
+              buttonTextStyle={{
+                color: '#fff',
+              }}
+              rowTextForSelection={(item, index) => {
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return item;
+              }}
+            />
+          </View>
+          <View style={styles.rowFlex}>
+            {/* <View style={styles.SectionStyle}> */}
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={val => setGrams2(val)}
+              placeholder="Time (min)"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
             {/* </View> */}
           </View>
 
@@ -340,7 +377,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
-  },inputStyle: {
+  },
+  inputStyle: {
     flex: 1,
     color: COLORS.white,
     paddingLeft: 5,

@@ -68,7 +68,7 @@ export default function OnBoard({navigation}) {
               style={{
                 width: '100%',
                 marginTop: -4,
-                height: SIZES.height * 0.2,
+                height: SIZES.height * 0.4,
               }}
             />
             <Text style={styles.title}>
@@ -77,7 +77,7 @@ export default function OnBoard({navigation}) {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => navigation.navigate('MoreUserData')}>
           <View style={styles.centerFlex}>
@@ -94,8 +94,8 @@ export default function OnBoard({navigation}) {
               Start tracking food items and symptoms
             </Text>
           </View>
-        </TouchableOpacity>
-        <View style={styles.centerFlex}>
+        </TouchableOpacity> */}
+        {/* <View style={styles.centerFlex}>
           <Image
             source={sec2}
             resizeMode="cover"
@@ -121,7 +121,7 @@ export default function OnBoard({navigation}) {
           <Text style={styles.title}>
             Ingredient tracking and allergy free recipes
           </Text>
-        </View>
+        </View> */}
       </ScrollView>
     </ImageBackground>
   );
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     margin: 12,
   },
   title2: {
-    marginTop: SIZES.height * 0.05,
+    marginTop: SIZES.height * 0.2,
     marginBottom: SIZES.height * 0.05,
     color: COLORS.black,
     fontWeight: 'bold',

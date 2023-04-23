@@ -48,42 +48,42 @@ const LoginScreen = ({navigation}) => {
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
-  // const onPressLogin = () => {
-  //   navigation.navigate('Meal');
+  const onPressLogin = () => {
+    navigation.navigate('OnBoard');
 
-  //   const payload = {
-  //     username: userEmail,
-  //     password: userPassword,
-  //   };
-  //   console.log(payload);
-  //   setLoading(true);
+    // const payload = {
+    //   username: userEmail,
+    //   password: userPassword,
+    // };
+    // console.log(payload);
+    // setLoading(true);
 
-  //   login(payload)
-  //     .then(response => {
-  //       if (response.error) {
-  //         console.log('error__<', response.error);
-  //         showToast('try again');
-  //         return;
-  //       }
-  //       const {data} = response;
-  //       console.log('res', response.data);
+    // login(payload)
+    //   .then(response => {
+    //     if (response.error) {
+    //       console.log('error__<', response.error);
+    //       showToast('try again');
+    //       return;
+    //     }
+    //     const {data} = response;
+    //     console.log('res', response.data);
 
-  //       console.log('token', data.accessToken);
-  //       setClientToken(data.accessToken);
-  //       storeUserToken(data.accessToken).then(result =>
-  //         console.log('Remove me if not needed', result),
-  //       );
-  //       navigation.navigate('Home');
-  //     })
-  //     .catch(error => {
-  //       console.log('error-->', error);
+    //     console.log('token', data.accessToken);
+    //     setClientToken(data.accessToken);
+    //     storeUserToken(data.accessToken).then(result =>
+    //       console.log('Remove me if not needed', result),
+    //     );
+    //     navigation.navigate('Home');
+    //   })
+    //   .catch(error => {
+    //     console.log('error-->', error);
 
-  //       // showToast(error.responses);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // };
+    //     // showToast(error.responses);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+  };
   return (
     <ImageBackground
       style={styles.mainBody}
