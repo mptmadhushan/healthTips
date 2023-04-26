@@ -17,165 +17,252 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+import {detailsApi} from '../api/detailsApi';
+import axios from 'axios';
 import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import Toast from 'react-native-simple-toast';
-// import {login} from '../api/authAPI';
-import {storeUserToken, getUserToken} from '../shared/asyncStorage';
-import {setClientToken} from '../shared/axios';
-// import {useDispatch} from 'react-redux';
-// import {authSuccess} from '../redux/authSlice';
+import CheckBox from '@react-native-community/checkbox';
+import AsyncStorage from '@react-native-community/async-storage';
 
-const LoginScreen = ({navigation}) => {
-  const [bmi, setBmi] = useState('');
-  const [needs, setNeeds] = useState('');
+const DetailScreen = ({navigation}) => {
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  const [bmi, setBMI] = useState('-');
+  const [gender, setGender] = useState('');
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
+  const [age, setAge] = useState('');
+
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
   const [userNameError, setUserNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [drugAl, setToggleDrug] = useState(false);
+  const [allergies, setAllergies] = useState(false);
+  const [toggleFamily, setToggleCheckBox] = useState(false);
 
   const passwordInputRef = createRef();
-  // const dispatch = useDispatch();
+  useEffect(() => {}, [bmi]);
 
-  useEffect(() => {
-    getUserToken().then(token => {
-      if (token) {
-        setClientToken(token);
-        // dispatch(authSuccess(token));
-        // navigation.navigate('Login');
-        
-      }
-    });
-  });
+  const data = [
+    'Teacher',
+    'Nurse',
+    'Police Officer',
+    'Construction work',
+    'Farming',
+    'Desk job',
+  ];
   const showToast = message => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
-  // const onPressLogin = () => {
-  //   navigation.navigate('Home');
 
-  //   const payload = {
-  //     username: bmi,
-  //     password: needs,
-  //   };
-  //   console.log(payload);
-  //   setLoading(true);
+  const onNext = () => {
+    const payload = {
+      Height: height,
+      Weight: weight,
+      IsMale: 'True',
+      Age: age,
+    };
 
-  //   login(payload)
-  //     .then(response => {
-  //       if (response.error) {
-  //         console.log('error__<', response.error);
-  //         showToast('try again');
-  //         return;
-  //       }
-  //       const {data} = response;
-  //       console.log('res', response.data);
+    setLoading(true);
+    console.log(payload);
+    navigation.navigate('Meal');
+    // axios
+    //   .post(
+    //     'http://ec2-54-242-87-59.compute-1.amazonaws.com:4900/predict',
+    //     payload,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
+    //       },
+    //     },
+    //   )
+    //   .then(res => {
+    //     console.log(res.data);
+    //     navigation.navigate('Meal');
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     navigation.navigate('Meal');
+    //   });
+    // detailsApi(payload)
+    //   .then(response => {
+    //     if (response.error) {
+    //       console.log('error__<', response.error);
+    //       showToast('try again');
+    //       return;
+    //     }
+    //     const {data} = response;
+    //     console.log('res', response.data);
+    //     console.log('token', data.access);
+    //     navigation.navigate('Login');
+    //   })
+    //   .catch(error => {
+    //     console.log('error-->', error);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+  };
+  const getBMI = () => {
+    let bmiRes = weight / (height * height);
+    console.log('🚀 ~ file: Details.js:87 ~ getBMI ~ bmi', bmiRes);
+    setBMI(bmiRes);
+    storeUserDetails();
 
-  //       console.log('token', data.accessToken);
-  //       setClientToken(data.accessToken);
-  //       storeUserToken(data.accessToken).then(result =>
-  //         console.log('Remove me if not needed', result),
-  //       );
-  //       navigation.navigate('Home');
-  //     })
-  //     .catch(error => {
-  //       console.log('error-->', error);
+    return bmiRes;
+  };
+  const storeUserDetails = async () => {
+    try {
+      const userData = {
+        Age: age,
+        Height: height,
+        Weight: weight,
+        isMale: 'True',
+      };
+      const jsonData = JSON.stringify(userData);
+      // const exisData = userMeal;
+      // const updatedData = [...exisData, jsonData];
+      // console.log('🚀 ~ updatedData', jsonData);
 
-  //       // showToast(error.responses);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // };
+      // const arr = [];
+      // const newDat = arr.push(jsonData);
+      // console.log('🚀 ~ updatedData', newDat);
+      await AsyncStorage.setItem('@user_data', jsonData);
+    } catch (e) {
+      console.log('Error!!!!! (Handle me properly) -> ', e);
+    }
+  };
   return (
     <ImageBackground
-      style={styles.mainBody}
-      source={require('../assets/backlg.jpeg')}>
+      source={require('../assets/images/arBg.jpeg')}
+      style={styles.mainBody}>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           justifyContent: 'center',
           alignItems: 'center',
+          height: '100%',
           alignContent: 'center',
-          width: SIZES.width,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          flex: 1,
+          backgroundColor: 'rgba(0,0,0,0.4)',
         }}>
-        <View style={styles.centerFlex}>
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            style={{
-              width: SIZES.width * 0.3,
-              height: SIZES.width * 0.3,
-              marginBottom: SIZES.height * 0.03,
-              marginTop: SIZES.height * 0.45,
-              // tintColor: focused ? COLORS.primary : COLORS.secondary,
-            }}
-          />
+        <Text style={styles.title}>Enter your Details</Text>
+        {/* allergiesallergies */}
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setAge(UserName)}
+              placeholder="Age"
+              placeholderTextColor="#fff"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
+          </View>
         </View>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <View style={styles.rowFlex}>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  userNameError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={bmi => setBmi(bmi)}
-                placeholder="Your BMI value"
-                placeholderTextColor={COLORS.white}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setHeight(UserName)}
+              placeholder="height in m2"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.rowFlex}>
-            {/* <Image
-              source={icons.lock}
-              resizeMode="contain"
-              style={{
-                width: 20,
-                height: 20,
-              }}
-            /> */}
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={[
-                  styles.inputStyle,
-                  passwordError ? styles.inputStyleError : '',
-                ]}
-                onChangeText={text => setNeeds(text)}
-                placeholder="Your daily needs" //12345
-                placeholderTextColor={COLORS.white}
-                keyboardType="default"
-                ref={passwordInputRef}
-                onSubmitEditing={Keyboard.dismiss}
-                blurOnSubmit={false}
-                underlineColorAndroid="#f000"
-                returnKeyType="next"
-              />
-            </View>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setWeight(UserName)}
+              placeholder="Weight in kg"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-          <View style={styles.centerFlex}>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={navigation.navigate('Meal')}>
-              <Text style={styles.buttonTextStyle}>Next</Text>
-            </TouchableOpacity>
+        </View>
+        <View style={styles.rowFlex}>
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={[
+                styles.inputStyle,
+                userNameError ? styles.inputStyleError : '',
+              ]}
+              onChangeText={UserName => setGender(UserName)}
+              placeholder="Gender"
+              placeholderTextColor={COLORS.white}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+            />
           </View>
-        </KeyboardAvoidingView>
+        </View>
+
+        <View style={styles.centerFlex}>
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={() => getBMI()}>
+            <Text style={styles.buttonTextStyle}>Done</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{marginTop: 35}} />
+        <View style={styles.centerFlex}>
+          {/* <View style={styles.SectionStyle}> */}
+          <Text style={[{marginBottom: 20}, styles.buttonTextStyle]}>
+            Your BMI is {bmi}
+          </Text>
+          {/* </View> */}
+        </View>
+
+        <View style={styles.centerFlex}>
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={() => onNext()}>
+            <Text style={styles.buttonTextStyle}>Next</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </ImageBackground>
   );
 };
-export default LoginScreen;
+export default DetailScreen;
 
 const styles = StyleSheet.create({
   centerFlex: {
@@ -183,6 +270,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
   },
+  buttonTextStyle2: {
+    color: COLORS.secondary,
+
+    fontSize: 10,
+    fontWeight: 'bold',
+    textAlign: 'right',
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: SIZES.width * 0.3,
+  },
+
   rowFlex: {
     flexDirection: 'row',
     // flex: 1,
@@ -191,17 +289,22 @@ const styles = StyleSheet.create({
     marginLeft: SIZES.width * 0.1,
     alignContent: 'center',
   },
+  title: {
+    color: COLORS.black,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 30,
+    marginBottom: 15,
+    fontSize: 22,
+  },
   mainBody: {
     // backgroundColor: '#FAFAFA',
     flex: 1,
     // alignItems: 'flex-end',
     justifyContent: 'center',
   },
-  child: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
   SectionStyle: {
+    // backgroundColor: COLORS.secondary,
     borderRadius: 10,
     borderColor: COLORS.white,
     borderWidth: 1,
@@ -215,41 +318,20 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     height: 40,
     width: 130,
-    marginTop: 20,
     alignItems: 'center',
     borderRadius: 10,
     justifyContent: 'center',
   },
-  buttonStyle2: {
-    backgroundColor: COLORS.primary,
-    borderWidth: 0,
-    color: COLORS.white,
-    height: 30,
-    width: 130,
-    alignItems: 'center',
-    borderRadius: 30,
-    justifyContent: 'center',
-    marginTop: 10,
-  },
   buttonTextStyle: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-  },
-  buttonTextStyle2: {
-    color: COLORS.white,
-    fontSize: 10,
-    fontWeight: 'bold',
-    textAlign: 'right',
-    marginLeft: SIZES.width * 0.3,
-    paddingTop: 10,
-    paddingBottom: 10,
   },
   inputStyle: {
     flex: 1,
     color: COLORS.white,
     paddingLeft: 15,
-    // paddingRight: 15,
+    paddingRight: 15,
     width: SIZES.width * 0.7,
   },
   inputStyleError: {
@@ -274,5 +356,16 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     fontSize: 14,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    // marginBottom: 10,
+    width: SIZES.width * 0.7,
+    justifyContent: 'space-between',
+  },
+  label: {
+    margin: 8,
+    color: 'white',
+    padding: 5,
   },
 });

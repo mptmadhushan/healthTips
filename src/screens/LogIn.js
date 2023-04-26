@@ -51,7 +51,7 @@ const LoginScreen = ({navigation}) => {
   const onPressLogin = () => {
     if(!userEmail){
       alert('invalid email')
-    }if(!userEmail){
+    }if(!userPassword){
       alert('invalid email')
     }
     navigation.navigate('OnBoard');

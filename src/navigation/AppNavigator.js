@@ -5,16 +5,12 @@ import OnBoard from '../screens/OnBoard';
 import LogIn from '../screens/LogIn';
 
 import Register from '../screens/Register';
-import Details from '../screens/Details';
 import BMI from '../screens/BMI';
-import UserDetails from '../screens/UserDetails';
 import Meal from '../screens/Meal';
 import MealResult from '../screens/MealResult';
 import HealthTips from '../screens/HealthTips';
 import MoreUserData from '../screens/MoreUserData';
-import SuspectFood from '../screens/SuspectFood';
 import AlleResult from '../screens/AlleResult';
-import Symptoms from '../screens/Symptoms';
 import MealDinner from '../screens/MealDinner';
 import MealLunch from '../screens/MealLunch';
 import MealOther from '../screens/MealOther';
@@ -28,7 +24,7 @@ function MainStackNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="OnBoard"
+        initialRouteName="LogIn"
         screenOptions={{
           headerShown: TapGestureHandler,
         }}>
@@ -45,7 +41,7 @@ function MainStackNavigator() {
         <Stack.Screen
           name="Details"
           options={{headerShown: false}}
-          component={Details}
+          component={BMI}
         />
         <Stack.Screen
           name="Register"
@@ -57,11 +53,7 @@ function MainStackNavigator() {
           options={{headerShown: false}}
           component={BMI}
         />
-        <Stack.Screen
-          name="UserDetails"
-          options={{headerShown: false}}
-          component={UserDetails}
-        />
+        
         <Stack.Screen
           name="Meal"
           options={{headerShown: false}}
@@ -82,11 +74,7 @@ function MainStackNavigator() {
           options={{headerShown: false}}
           component={HealthTips}
         />
-        <Stack.Screen
-          name="SuspectFood"
-          options={{headerShown: false}}
-          component={SuspectFood}
-        />
+       
         <Stack.Screen
           name="AlleResult"
           options={{headerShown: false}}
@@ -102,11 +90,7 @@ function MainStackNavigator() {
           options={{headerShown: false}}
           component={MealLunch}
         />
-        <Stack.Screen
-          name="Symptoms"
-          options={{headerShown: false}}
-          component={Symptoms}
-        />
+       
         <Stack.Screen
           name="MealOther"
           options={{headerShown: false}}
