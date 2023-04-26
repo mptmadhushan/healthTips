@@ -41,7 +41,8 @@ const LoginScreen = ({navigation}) => {
       if (token) {
         setClientToken(token);
         // dispatch(authSuccess(token));
-        navigation.navigate('Login');
+        // navigation.navigate('Login');
+        
       }
     });
   });

@@ -77,7 +77,11 @@ const DetailScreen = ({navigation, route}) => {
   };
   const onNext = () => {
     navigation.navigate('MealResult', {
-      resp: 'resData',
+      resp:{
+        Diabetes: '77 %',
+        Cholesterol: '28 %',
+        Healthyness: 'You should be overweight in 7 days',
+      }
     });
     // const payload = {
     //   Height: JSON.parse(userMeal).Height,

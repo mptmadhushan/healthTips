@@ -49,6 +49,11 @@ const LoginScreen = ({navigation}) => {
     Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
   };
   const onPressLogin = () => {
+    if(!userEmail){
+      alert('invalid email')
+    }if(!userEmail){
+      alert('invalid email')
+    }
     navigation.navigate('OnBoard');
 
     // const payload = {

@@ -10,24 +10,43 @@ import {icons, images, SIZES, COLORS, FONTS} from '../helpers';
 import LinearGradient from 'react-native-linear-gradient';
 export default function OnBoard({navigation, route}) {
   const {resp} = route.params;
-  const [respo, setRespo] = useState({
-    Diabetes: '77 %',
-    Cholesterol: '28 %',
-    Healthyness: 'You should be overweight in 7 days',
-  });
+  // const [respo, setRespo] = useState({
+  //   Diabetes: '77 %',
+  //   Cholesterol: '28 %',
+  //   Healthyness: 'You should be overweight in 7 days',
+  // });
+
+  const getData=()=>{
+     axios
+      .post(
+        'http://localhost:3002/api',
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODM1MjQzLCJqdGkiOiIxNjAwODQ2MDE0MjI0MzY4ODYyM2YzY2YyZDQ2OTYyNiIsInVzZXJfaWQiOjF9.I9FHtw4WJP2Cz8Xhs8kJ1OYUVUm_cl0kBdX4i9G8Su4`,
+          },
+        },
+      )
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   return (
     <ImageBackground
       style={styles.container}
       source={require('../assets/images/arBg.jpeg')}>
       <LinearGradient colors={['transparent', 'white']} style={styles.overlay}>
-        <Text style={styles.title2}>Your meal plan{'\n'} is an unhealthy</Text>
+        <Text style={styles.title2}>{resp.Healthyness}</Text>
         {/* <Text style={styles.title}> {resp.Cholesterol}</Text> */}
 
         <TouchableOpacity disabled style={styles.btn}>
-          <Text style={styles.btnText}>Cholesterol :40%{resp.Cholesterol}</Text>
+          <Text style={styles.btnText}>Cholesterol :{resp.Cholesterol}</Text>
         </TouchableOpacity>
         <TouchableOpacity disabled style={styles.btn}>
-          <Text style={styles.btnText}>Diabetes :50%{resp.Diabetes}</Text>
+          <Text style={styles.btnText}>Diabetes :{resp.Diabetes}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
